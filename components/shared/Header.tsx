@@ -60,7 +60,7 @@ interface Props {
 export const Header: React.FC<Props> = ({ className }) => {
     return (
         <header className={cn("bg-white dark:bg-[--bg-color-dark]", className)}>
-            <Container className="flex items-center justify-between gap-36 py-6 px-6">
+            <Container className="flex items-center justify-between py-6 px-6">
                 {/* Левая часть */}
                 <div>
                     <Image
@@ -75,60 +75,25 @@ export const Header: React.FC<Props> = ({ className }) => {
                     <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <NavigationMenuTrigger>
-                                    Главная
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                        <li className="row-span-3">
-                                            <NavigationMenuLink asChild>
-                                                <a
-                                                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                                    href="/"
-                                                >
-                                                    <div className="mb-2 mt-4 text-lg font-medium">
-                                                        shadcn/ui
-                                                    </div>
-                                                    <p className="text-sm leading-tight text-muted-foreground">
-                                                        Красиво оформленные
-                                                        компоненты, которые вы
-                                                        можете копировать и
-                                                        вставлять в свои
-                                                        приложения. Доступный.
-                                                        Настраиваемый. Открыть
-                                                        Источник.
-                                                    </p>
-                                                </a>
-                                            </NavigationMenuLink>
-                                        </li>
-                                        <ListItem
-                                            href="/docs"
-                                            title="Вступление"
-                                        >
-                                            Повторно используемые компоненты,
-                                            созданные с использованием Radix UI
-                                            и Tailwind CSS.
-                                        </ListItem>
-                                        <ListItem
-                                            href="/docs/installation"
-                                            title="Установка"
-                                        >
-                                            Как установить зависимости и
-                                            структурировать ваше приложение.
-                                        </ListItem>
-                                        <ListItem
-                                            href="/docs/primitives/typography"
-                                            title="Типография"
-                                        >
-                                            Стили для заголовков, абзацев,
-                                            списков... и т.д.
-                                        </ListItem>
-                                    </ul>
-                                </NavigationMenuContent>
+                                <Link href="/" passHref legacyBehavior>
+                                    <NavigationMenuLink
+                                        className={navigationMenuTriggerStyle()}
+                                    >
+                                        Главная
+                                    </NavigationMenuLink>
+                                </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>
-                                    Курсы
+                                    <Link
+                                        href="/courses"
+                                        passHref
+                                        legacyBehavior
+                                    >
+                                        <NavigationMenuLink>
+                                            Курсы
+                                        </NavigationMenuLink>
+                                    </Link>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
@@ -181,7 +146,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <Link href="/docs" legacyBehavior passHref>
+                                <Link href="/support" legacyBehavior passHref>
                                     <NavigationMenuLink
                                         className={navigationMenuTriggerStyle()}
                                     >
