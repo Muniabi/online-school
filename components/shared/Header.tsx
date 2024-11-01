@@ -60,7 +60,7 @@ interface Props {
 export const Header: React.FC<Props> = ({ className }) => {
     return (
         <header className={cn("bg-white dark:bg-[--bg-color-dark]", className)}>
-            <Container className="flex items-center justify-between gap-36 py-8 px-6">
+            <Container className="flex items-center justify-between gap-36 py-6 px-6">
                 {/* Левая часть */}
                 <div>
                     <Image
