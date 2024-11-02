@@ -13,6 +13,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Button } from "./button";
+import { signOut } from "next-auth/react";
 
 // Определение типа для элемента меню
 interface MenuItem {
@@ -79,6 +81,16 @@ export function AppSidebar() {
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
+                        <Button
+                            onClick={() =>
+                                signOut({
+                                    callbackUrl: "/",
+                                    redirect: true,
+                                })
+                            }
+                        >
+                            Выйти
+                        </Button>
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
