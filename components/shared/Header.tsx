@@ -211,15 +211,6 @@ export const Header: React.FC<Props> = ({ className }) => {
                 </div>
                 {/* Правая часть */}
                 <div className="flex items-center gap-2">
-                    {/* <Link href="/auth/login">
-                        <Button variant={"ghost"} className="dark:text-white">
-                            <LockKeyhole size={24} />
-                            Войти
-                        </Button>
-                    </Link>
-                    <Link href="/auth/register">
-                        <Button>Регистрация</Button>
-                    </Link> */}
                     <AccountButton />
                 </div>
             </Container>
