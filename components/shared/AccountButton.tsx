@@ -31,13 +31,17 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                     </Link>
                 </div>
             ) : (
-                <Avatar>
-                    <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <>
+                    <Link href="/account">
+                        <Avatar>
+                            <AvatarImage
+                                src="https://github.com/shadcn.png"
+                                alt="@shadcn"
+                            />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                    </Link>
+                </>
             )}
         </div>
     );
