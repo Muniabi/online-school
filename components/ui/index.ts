@@ -43,3 +43,4 @@ export {
     FormMessage,
     FormField,
 } from "./form";
+export { Avatar, AvatarImage, AvatarFallback } from "./avatar";

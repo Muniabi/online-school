@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import React from "react";
-import { Container } from "./index";
+import { Container, AccountButton } from "./index";
 import Image from "next/image";
 import { LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/index";
@@ -211,7 +211,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                 </div>
                 {/* Правая часть */}
                 <div className="flex items-center gap-2">
-                    <Link href="/auth/login">
+                    {/* <Link href="/auth/login">
                         <Button variant={"ghost"} className="dark:text-white">
                             <LockKeyhole size={24} />
                             Войти
@@ -219,7 +219,8 @@ export const Header: React.FC<Props> = ({ className }) => {
                     </Link>
                     <Link href="/auth/register">
                         <Button>Регистрация</Button>
-                    </Link>
+                    </Link> */}
+                    <AccountButton />
                 </div>
             </Container>
         </header>
