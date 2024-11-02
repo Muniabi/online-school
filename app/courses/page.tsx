@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Courses() {
+export default function CoursesPage() {
     return (
         <div>
-            <h1>Courses</h1>
+            <h1>Все курсы</h1>
             <p>Добро пожаловать на страницу Courses.</p>
         </div>
     );

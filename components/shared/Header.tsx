@@ -15,6 +15,33 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/index";
 
+const courses: { title: string; href: string; description: string }[] = [
+    {
+        title: "Рекомендуемые",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "Курсы, рекомендованные на основе ваших интересов и достижений, чтобы помочь вам развиваться.",
+    },
+    {
+        title: "По направлениям",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "Изучайте курсы, организованные по направлениям, чтобы углубить свои знания в определённых областях.",
+    },
+    {
+        title: "Реальные кейсы",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "Работайте над реальными проектами и кейсами, чтобы применять полученные знания на практике.",
+    },
+    {
+        title: "Интенсивы",
+        href: "/docs/primitives/scroll-area",
+        description:
+            "Участвуйте в интенсивных курсах, чтобы быстро освоить новые навыки и технологии.",
+    },
+];
+
 const components: { title: string; href: string; description: string }[] = [
     {
         title: "Диалоговое окно",
@@ -50,6 +77,27 @@ const components: { title: string; href: string; description: string }[] = [
         href: "/docs/primitives/tooltip",
         description:
             "Всплывающее окно, отображающее информацию, относящуюся к элементу, когда элемент получает фокусировку клавиатуры или на него наводится курсор мыши.",
+    },
+];
+
+const events: { title: string; href: string; description: string }[] = [
+    {
+        title: "Кодинг-баттлы",
+        href: "/docs/primitives/hover-card",
+        description:
+            "Соревнуйтесь с другими программистами в кодинг-баттлах, демонстрируя свои навыки и креативность.",
+    },
+    {
+        title: "Лидеры недели",
+        href: "/docs/primitives/progress",
+        description:
+            "Следите за достижениями лучших студентов недели и вдохновляйтесь их успехами.",
+    },
+    {
+        title: "Достижения",
+        href: "/docs/primitives/scroll-area",
+        description:
+            "Получайте достижения за успехи в обучении и делитесь ими с сообществом.",
     },
 ];
 
@@ -97,13 +145,13 @@ export const Header: React.FC<Props> = ({ className }) => {
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                        {components.map((component) => (
+                                        {courses.map((course) => (
                                             <ListItem
-                                                key={component.title}
-                                                title={component.title}
-                                                href={component.href}
+                                                key={course.title}
+                                                title={course.title}
+                                                href={course.href}
                                             >
-                                                {component.description}
+                                                {course.description}
                                             </ListItem>
                                         ))}
                                     </ul>
@@ -114,14 +162,33 @@ export const Header: React.FC<Props> = ({ className }) => {
                                     Соревнования
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
-                                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                        {components.map((component) => (
+                                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                        <li className="row-span-4">
+                                            <NavigationMenuLink asChild>
+                                                <a
+                                                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-[url('/hackaton.webp')] bg-cover from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                                    href="/"
+                                                >
+                                                    <div className="mb-2 mt-4 text-white text-lg font-medium">
+                                                        Хакатоны
+                                                    </div>
+                                                    <p className="text-sm leading-tight text-stone-200 text-muted-foreground">
+                                                        Участвуйте в хакатонах,
+                                                        где сможете решать
+                                                        реальные задачи и
+                                                        развивать свои навыки в
+                                                        команде.
+                                                    </p>
+                                                </a>
+                                            </NavigationMenuLink>
+                                        </li>
+                                        {events.map((event) => (
                                             <ListItem
-                                                key={component.title}
-                                                title={component.title}
-                                                href={component.href}
+                                                key={event.title}
+                                                title={event.title}
+                                                href={event.href}
                                             >
-                                                {component.description}
+                                                {event.description}
                                             </ListItem>
                                         ))}
                                     </ul>
@@ -159,11 +226,15 @@ export const Header: React.FC<Props> = ({ className }) => {
                 </div>
                 {/* Правая часть */}
                 <div className="flex items-center gap-2">
-                    <Button variant={"ghost"} className="dark:text-white">
-                        <LockKeyhole size={24} />
-                        Войти
-                    </Button>
-                    <Button>Регистрация</Button>
+                    <Link href="/auth/login">
+                        <Button variant={"ghost"} className="dark:text-white">
+                            <LockKeyhole size={24} />
+                            Войти
+                        </Button>
+                    </Link>
+                    <Link href="/auth/register">
+                        <Button>Регистрация</Button>
+                    </Link>
                 </div>
             </Container>
         </header>
