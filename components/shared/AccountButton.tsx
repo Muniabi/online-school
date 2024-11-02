@@ -26,7 +26,7 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                     <Skeleton className="h-10 w-24" />{" "}
                     {/* Скелетон для кнопки регистрации */}
                 </div>
-            ) : session ? (
+            ) : !session ? (
                 <div className="flex items-center gap-2">
                     <Link href="/login">
                         <Button variant={"ghost"} className="dark:text-white">
