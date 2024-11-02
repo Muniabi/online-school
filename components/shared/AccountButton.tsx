@@ -20,13 +20,13 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
         <div className={className}>
             {!session ? (
                 <div className="flex items-center gap-2">
-                    <Link href="/auth/login">
+                    <Link href="/login">
                         <Button variant={"ghost"} className="dark:text-white">
                             <LockKeyhole size={24} />
                             Войти
                         </Button>
                     </Link>
-                    <Link href="/auth/register">
+                    <Link href="/register">
                         <Button>Регистрация</Button>
                     </Link>
                 </div>
