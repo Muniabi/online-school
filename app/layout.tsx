@@ -11,7 +11,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-    title: "Ckarton Studio | Главная",
+    title: "KuberCode | Главная",
 };
 
 export default function RootLayout({
