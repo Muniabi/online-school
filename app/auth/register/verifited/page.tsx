@@ -7,6 +7,11 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from "@/components/ui/index";
+
+const handleResendCode = () => {
+    // Логика для повторной отправки кода на электронную почту
+    console.log("Код отправлен снова");
+};
 export default function Verifited() {
     return (
         <>
@@ -38,7 +43,9 @@ export default function Verifited() {
                 </div>
                 <div className="mt-4 text-center text-gray-500">
                     <p>Не получили код?</p>
-                    <Button className="my-3">Отправить еще раз</Button>
+                    <Button className="my-3" onClick={handleResendCode}>
+                        Отправить еще раз
+                    </Button>
                 </div>
             </div>
         </>
