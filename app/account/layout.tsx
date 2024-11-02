@@ -1,14 +1,14 @@
-"use client";
-
-import { Metadata } from "next";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import type { Metadata } from "next";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
+import AccountLayout from "./AccountLayout"; // Импортируем клиентский компонент
 
-// export const metadata: Metadata = {
-//     title: "KuberCode | Личный кабинет",
-// };
+// Экспортируем метаданные для страницы
+export const metadata: Metadata = {
+    title: "KuberCode | Личный кабинет",
+};
 
-export default function AccountLayout({
+export default function AccountPageLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -16,10 +16,8 @@ export default function AccountLayout({
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main>
-                <SidebarTrigger />
-                {children}
-            </main>
+            <AccountLayout>{children}</AccountLayout>{" "}
+            {/* Используем клиентский компонент */}
         </SidebarProvider>
     );
 }
