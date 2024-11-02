@@ -57,44 +57,6 @@ const communitys: { title: string; href: string; description: string }[] = [
     },
 ];
 
-const components: { title: string; href: string; description: string }[] = [
-    {
-        title: "Диалоговое окно",
-        href: "/docs/primitives/alert-dialog",
-        description:
-            "Модальный диалог, который отвлекает пользователя от важного контента и ожидает ответа.",
-    },
-    {
-        title: "Hover Card",
-        href: "/docs/primitives/hover-card",
-        description:
-            "Чтобы зрячие пользователи могли просматривать контент, доступный по ссылке.",
-    },
-    {
-        title: "Прогресс",
-        href: "/docs/primitives/progress",
-        description:
-            "Отображает индикатор, показывающий ход выполнения задачи, обычно отображаемый в виде индикатора выполнения.",
-    },
-    {
-        title: "Область прокрутки",
-        href: "/docs/primitives/scroll-area",
-        description: "Визуально или семантически разделяет содержимое.",
-    },
-    {
-        title: "Вкладки",
-        href: "/docs/primitives/tabs",
-        description:
-            "Набор многоуровневых разделов содержимого, известных как панели вкладок, которые отображаются по одному за раз.",
-    },
-    {
-        title: "Подсказка",
-        href: "/docs/primitives/tooltip",
-        description:
-            "Всплывающее окно, отображающее информацию, относящуюся к элементу, когда элемент получает фокусировку клавиатуры или на него наводится курсор мыши.",
-    },
-];
-
 const events: { title: string; href: string; description: string }[] = [
     {
         title: "Кодинг-баттлы",

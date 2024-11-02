@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
 
 export default function AuthPage() {
     return (
@@ -108,7 +109,9 @@ export default function AuthPage() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button>Save changes</Button>
+                        <Link href="/auth/register/verifited">
+                            <Button>Save changes</Button>
+                        </Link>
                     </CardFooter>
                 </Card>
             </TabsContent>

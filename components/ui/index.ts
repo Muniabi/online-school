@@ -27,3 +27,9 @@ export {
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
 export { Input } from "./input";
 export { Label } from "./label";
+export {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSlot,
+    InputOTPSeparator,
+} from "./input-otp";
