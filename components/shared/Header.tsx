@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Container } from "./index";
@@ -5,6 +7,7 @@ import Image from "next/image";
 import { LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/index";
 import Link from "next/link";
+
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -84,8 +87,13 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ className }) => {
     return (
-        <header className={cn("bg-white dark:bg-[--bg-color-dark]", className)}>
-            <Container className="flex items-center justify-between py-6 px-6">
+        <header
+            className={cn(
+                "bg-white dark:bg-[--bg-color-dark] border-[#E7E9EB] border-b",
+                className
+            )}
+        >
+            <Container className="flex items-center justify-between py-6 px-6 ">
                 {/* Левая часть */}
                 <div>
                     <Image

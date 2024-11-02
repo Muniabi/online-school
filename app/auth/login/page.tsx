@@ -7,6 +7,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useSession, signIn, signOut } from "next-auth/react";
 import {
     Form,
     FormControl,
@@ -91,7 +92,17 @@ export default function LoginPage() {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit">Войти</Button>
+                                <Button
+                                    type="submit"
+                                    onClick={() =>
+                                        signIn("github", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    Войти
+                                </Button>
                             </form>
                         </Form>
                     </CardContent>

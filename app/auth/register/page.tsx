@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const formSchema = z.object({
     userType: z.enum(["student", "author"], {
@@ -45,10 +46,18 @@ export default function RegisterPage() {
         },
     });
 
+    const onClick = () => {
+        signIn("vk", {
+            callbackUrl: "/",
+            redirect: true,
+        });
+    };
+
     const onSubmit = async (data: FormData) => {
+        onClick();
         console.log(data);
         // Здесь можно добавить логику для отправки данных на сервер
-        router.push("/auth/register/verifited");
+        // router.push("/auth/register/verifited");
     };
 
     return (
@@ -142,7 +151,9 @@ export default function RegisterPage() {
                                     </p>
                                 )}
                             </div>
-                            <Button type="submit">Зарегистрироваться</Button>
+                            <Button onClick={onClick}>
+                                Зарегистрироваться
+                            </Button>
                         </form>
                     </CardContent>
                 </Card>
