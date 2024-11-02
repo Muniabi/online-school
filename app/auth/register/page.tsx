@@ -77,12 +77,34 @@ export default function AuthPage() {
                     </CardHeader>
                     <CardContent className="space-y-2">
                         <div className="space-y-1">
-                            <Label htmlFor="name">Name</Label>
-                            <Input id="name" placeholder="Имя" />
+                            <Label htmlFor="firstName">Имя</Label>
+                            <Input id="firstName" placeholder="Имя" required />
                         </div>
                         <div className="space-y-1">
-                            <Label htmlFor="username">Username</Label>
-                            <Input id="username" />
+                            <Label htmlFor="lastName">Фамилия</Label>
+                            <Input
+                                id="lastName"
+                                placeholder="Фамилия"
+                                required
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label htmlFor="email">Почта</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                placeholder="Email"
+                                required
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <Label htmlFor="password">Пароль</Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                placeholder="Пароль"
+                                required
+                            />
                         </div>
                     </CardContent>
                     <CardFooter>

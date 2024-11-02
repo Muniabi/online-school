@@ -42,6 +42,21 @@ const courses: { title: string; href: string; description: string }[] = [
     },
 ];
 
+const communitys: { title: string; href: string; description: string }[] = [
+    {
+        title: "Форум",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "Общайтесь с другими студентами и преподавателями, задавайте вопросы и делитесь знаниями.",
+    },
+    {
+        title: "Новости IT",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "Получайте обновления о последних новостях в области информационных технологий.",
+    },
+];
+
 const components: { title: string; href: string; description: string }[] = [
     {
         title: "Диалоговое окно",
@@ -200,13 +215,13 @@ export const Header: React.FC<Props> = ({ className }) => {
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                        {components.map((component) => (
+                                        {communitys.map((community) => (
                                             <ListItem
-                                                key={component.title}
-                                                title={component.title}
-                                                href={component.href}
+                                                key={community.title}
+                                                title={community.title}
+                                                href={community.href}
                                             >
-                                                {component.description}
+                                                {community.description}
                                             </ListItem>
                                         ))}
                                     </ul>
