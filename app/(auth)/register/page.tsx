@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { Avatar, AvatarImage } from "@/components/ui";
 
 const formSchema = z.object({
     userType: z.enum(["student", "author"], {
@@ -46,22 +47,14 @@ export default function RegisterPage() {
         },
     });
 
-    const onClick = () => {
-        signIn("vk", {
-            callbackUrl: "/",
-            redirect: true,
-        });
-    };
-
     const onSubmit = async (data: FormData) => {
-        onClick();
         console.log(data);
         // Здесь можно добавить логику для отправки данных на сервер
-        // router.push("/auth/register/verifited");
+        router.push("/register/verifited");
     };
 
     return (
-        <Tabs defaultValue="student" className="w-[400px] mx-auto mt-16">
+        <Tabs defaultValue="student" className="w-[400px] mx-auto my-12">
             <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger
                     value="student"
@@ -88,6 +81,56 @@ export default function RegisterPage() {
                             к курсам, интерактивным занятиям и возможностям
                             заработка бонусов за успехи в обучении.
                         </CardDescription>
+                        <div className="mx-auto">
+                            <p className="py-2">Регистрация с помощью</p>
+                            <div className="flex items-center justify-evenly">
+                                <button
+                                    onClick={() =>
+                                        signIn("github", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar>
+                                        <AvatarImage
+                                            src="https://authjs.dev/img/providers/github.svg"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        signIn("vk", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar className="rounded-none">
+                                        <AvatarImage
+                                            src="/vk.png"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        signIn("google", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar>
+                                        <AvatarImage
+                                            src="https://authjs.dev/img/providers/google.svg"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent className="space-y-2">
                         <form
@@ -151,9 +194,7 @@ export default function RegisterPage() {
                                     </p>
                                 )}
                             </div>
-                            <Button onClick={onClick}>
-                                Зарегистрироваться
-                            </Button>
+                            <Button>Зарегистрироваться</Button>
                         </form>
                     </CardContent>
                 </Card>

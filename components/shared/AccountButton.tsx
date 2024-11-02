@@ -8,17 +8,25 @@ import {
     Button,
 } from "@/components/ui/index";
 import { LockKeyhole } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Props {
     className?: string;
 }
 
 export const AccountButton: React.FC<Props> = ({ className }) => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession(); // Добавлен статус сессии
 
     return (
         <div className={className}>
-            {!session ? (
+            {status === "loading" ? ( // Проверяем статус загрузки
+                <div className="flex items-center gap-2">
+                    <Skeleton className="h-10 w-24" />{" "}
+                    {/* Скелетон для кнопки входа */}
+                    <Skeleton className="h-10 w-24" />{" "}
+                    {/* Скелетон для кнопки регистрации */}
+                </div>
+            ) : session ? (
                 <div className="flex items-center gap-2">
                     <Link href="/login">
                         <Button variant={"ghost"} className="dark:text-white">
@@ -31,17 +39,15 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                     </Link>
                 </div>
             ) : (
-                <>
-                    <Link href="/account">
-                        <Avatar>
-                            <AvatarImage
-                                src="https://github.com/shadcn.png"
-                                alt="@shadcn"
-                            />
-                            <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                    </Link>
-                </>
+                <Link href="/account">
+                    <Avatar>
+                        <AvatarImage
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                </Link>
             )}
         </div>
     );

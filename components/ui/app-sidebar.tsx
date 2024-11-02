@@ -2,7 +2,6 @@
 
 "use client"; // Убедитесь, что файл является клиентским
 
-import { useEffect, useState } from "react";
 import { Calendar, Home, MessageCircle, Users, Settings } from "lucide-react";
 import {
     Sidebar,
@@ -14,7 +13,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Skeleton } from "@/components/ui/skeleton";
 
 // Определение типа для элемента меню
 interface MenuItem {
@@ -35,7 +33,7 @@ const items: MenuItem[] = [
     },
     {
         title: "Расписание",
-        url: "#",
+        url: "/account/schedule",
         icon: Calendar,
     },
     {
@@ -61,20 +59,6 @@ const items: MenuItem[] = [
 ];
 
 export function AppSidebar() {
-    const [loading, setLoading] = useState(true);
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]); // Явное указание типа
-
-    // Имитация загрузки данных
-    useEffect(() => {
-        const fetchData = async () => {
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Имитация задержки
-            setMenuItems(items); // Установка элементов меню
-            setLoading(false); // Завершение загрузки
-        };
-
-        fetchData();
-    }, []);
-
     return (
         <Sidebar>
             <SidebarContent>
@@ -84,29 +68,16 @@ export function AppSidebar() {
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {loading
-                                ? // Отображение скелетонов во время загрузки
-                                  Array.from({ length: 5 }).map((_, index) => (
-                                      <SidebarMenuItem key={index}>
-                                          <SidebarMenuButton asChild>
-                                              <div className="flex items-center space-x-2">
-                                                  <Skeleton className="h-6 w-6" />
-                                                  <Skeleton className="h-4 w-[150px]" />
-                                              </div>
-                                          </SidebarMenuButton>
-                                      </SidebarMenuItem>
-                                  ))
-                                : // Отображение элементов меню после загрузки
-                                  menuItems.map((item) => (
-                                      <SidebarMenuItem key={item.title}>
-                                          <SidebarMenuButton asChild>
-                                              <a href={item.url}>
-                                                  <item.icon />
-                                                  <span>{item.title}</span>
-                                              </a>
-                                          </SidebarMenuButton>
-                                      </SidebarMenuItem>
-                                  ))}
+                            {items.map((item) => (
+                                <SidebarMenuItem key={item.title}>
+                                    <SidebarMenuButton asChild>
+                                        <a href={item.url}>
+                                            <item.icon />
+                                            <span>{item.title}</span>
+                                        </a>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
