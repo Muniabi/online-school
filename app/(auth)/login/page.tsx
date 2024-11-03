@@ -7,7 +7,8 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 import {
     Form,
     FormControl,
@@ -16,6 +17,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { Avatar, AvatarImage } from "@/components/ui/index";
 
 // Создание схемы валидации с помощью Zod
 const formSchema = z.object({
@@ -40,9 +42,22 @@ export default function LoginPage() {
         },
     });
 
-    const onSubmit = (data: FormData) => {
-        console.log(data);
-        // Здесь вы можете добавить логику для отправки данных на сервер
+    const onSubmit = async (data: FormData) => {
+        const result = await signIn("credentials", {
+            redirect: true,
+            email: data.email,
+            password: data.password,
+        });
+
+        if (!result?.error) {
+            // Перенаправление на главную страницу при успешном входе
+            window.location.href = "/";
+        } else {
+            toast("Ошибка входа", {
+                description: "Неверный адрес электронной почты или пароль.",
+            });
+            console.error(result.error);
+        }
     };
 
     return (
@@ -51,6 +66,56 @@ export default function LoginPage() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-center">Вход</CardTitle>
+                        <div className="mx-auto">
+                            <p className="py-2">Войти с помощью</p>
+                            <div className="flex items-center justify-evenly">
+                                <button
+                                    onClick={() =>
+                                        signIn("github", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar>
+                                        <AvatarImage
+                                            src="https://authjs.dev/img/providers/github.svg"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        signIn("vk", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar className="rounded-none">
+                                        <AvatarImage
+                                            src="/vk.png"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        signIn("google", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar>
+                                        <AvatarImage
+                                            src="https://authjs.dev/img/providers/google.svg"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <Form {...form}>
@@ -92,17 +157,7 @@ export default function LoginPage() {
                                         </FormItem>
                                     )}
                                 />
-                                <Button
-                                    type="submit"
-                                    onClick={() =>
-                                        signIn("github", {
-                                            callbackUrl: "/",
-                                            redirect: true,
-                                        })
-                                    }
-                                >
-                                    Войти
-                                </Button>
+                                <Button type="submit">Войти</Button>
                             </form>
                         </Form>
                     </CardContent>

@@ -4,8 +4,6 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { Container, AccountButton } from "./index";
 import Image from "next/image";
-import { LockKeyhole } from "lucide-react";
-import { Button } from "@/components/ui/index";
 import Link from "next/link";
 
 import {

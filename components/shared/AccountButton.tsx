@@ -7,6 +7,12 @@ import {
     AvatarImage,
     Button,
 } from "@/components/ui/index";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { LockKeyhole } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -39,15 +45,24 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                     </Link>
                 </div>
             ) : (
-                <Link href="/account">
-                    <Avatar>
-                        <AvatarImage
-                            src="https://github.com/shadcn.png"
-                            alt="@shadcn"
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                </Link>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Link href="/account">
+                                <Avatar>
+                                    <AvatarImage
+                                        src="https://github.com/shadcn.png"
+                                        alt="@shadcn"
+                                    />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                            </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Профиль</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
             )}
         </div>
     );

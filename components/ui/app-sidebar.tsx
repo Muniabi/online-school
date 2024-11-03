@@ -15,6 +15,20 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "./button";
 import { signOut } from "next-auth/react";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Определение типа для элемента меню
 interface MenuItem {

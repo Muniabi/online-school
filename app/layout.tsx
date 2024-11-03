@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/shared/providers";
 import ClientLayout from "./ClientLayout"; // Импорт клиентского компонента
+import { Toaster } from "@/components/ui/sonner";
 
 const montserrat = Montserrat({
     subsets: ["cyrillic"],
@@ -25,7 +26,10 @@ export default function RootLayout({
             <body className={montserrat.className}>
                 <main className="min-h-screen">
                     <Providers>
-                        <ClientLayout>{children}</ClientLayout>
+                        <ClientLayout>
+                            {children}
+                            <Toaster />
+                        </ClientLayout>
                     </Providers>
                 </main>
             </body>
