@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { signOut, useSession } from "next-auth/react";
 import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
 import { ProfileInfo } from "./profile-info";
@@ -16,6 +15,25 @@ export const AccountProfileDropdown = ({
     className?: string;
 }) => {
     const { data: session } = useSession();
+    const [menuSide, setMenuSide] = useState<"top" | "right">("right");
+
+    // Устанавливаем положение меню в зависимости от ширины экрана
+    useEffect(() => {
+        const handleResize = () => {
+            setMenuSide(window.innerWidth <= 768 ? "top" : "right");
+        };
+
+        // Инициализация
+        handleResize();
+
+        // Слушатель на изменение размера окна
+        window.addEventListener("resize", handleResize);
+
+        // Очистка слушателя при размонтировании компонента
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     // Проверяем, загружены ли данные пользователя
     if (!session || !session.user) {
@@ -34,7 +52,7 @@ export const AccountProfileDropdown = ({
                 {/* Иконка */}
                 <ChevronsUpDown size={16} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="right" className="px-2 pt-2">
+            <DropdownMenuContent side={menuSide} className="px-2 pt-2">
                 {/* Аватар и информация о пользователе */}
                 <ProfileInfo />
                 <div className="border-gray-200 border-b my-1"></div>
