@@ -6,6 +6,7 @@ import { Calendar, Home, MessageCircle, Users, Settings } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
+    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -15,20 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "./button";
 import { signOut } from "next-auth/react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { AccountProfileDropdown } from "@/components/ui/account-profile-dropdown";
 
 // Определение типа для элемента меню
 interface MenuItem {
@@ -79,7 +67,7 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-sm text-slate-600">
+                    <SidebarGroupLabel className="text-sm text-slate-800">
                         KuberCode Личный Кабинет
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
@@ -95,19 +83,12 @@ export function AppSidebar() {
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
-                        <Button
-                            onClick={() =>
-                                signOut({
-                                    callbackUrl: "/",
-                                    redirect: true,
-                                })
-                            }
-                        >
-                            Выйти
-                        </Button>
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
+            <SidebarFooter>
+                <AccountProfileDropdown />
+            </SidebarFooter>
         </Sidebar>
     );
 }

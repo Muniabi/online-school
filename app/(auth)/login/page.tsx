@@ -44,19 +44,20 @@ export default function LoginPage() {
 
     const onSubmit = async (data: FormData) => {
         const result = await signIn("credentials", {
-            redirect: true,
+            redirect: false,
             email: data.email,
             password: data.password,
         });
 
         if (!result?.error) {
-            // Перенаправление на главную страницу при успешном входе
+            toast.success("Успешный вход", {
+                description: "Вы успешно вошли в систему.",
+            });
             window.location.href = "/";
         } else {
-            toast("Ошибка входа", {
+            toast.error("Ошибка входа", {
                 description: "Неверный адрес электронной почты или пароль.",
             });
-            console.error(result.error);
         }
     };
 

@@ -4,7 +4,6 @@ import GoogleProvider from "next-auth/providers/google";
 import VkProvider from "next-auth/providers/vk";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { redirect } from "next/navigation";
 
 // Переменная с примерными данными пользователей (хранит хэшированные пароли)
 const users = [
