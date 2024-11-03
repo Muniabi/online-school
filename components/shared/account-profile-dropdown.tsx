@@ -8,6 +8,7 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
 import { ProfileInfo } from "./profile-info";
+import { ProfileSettings } from "./profile-settings";
 
 export const AccountProfileDropdown = ({
     className,
@@ -61,10 +62,7 @@ export const AccountProfileDropdown = ({
                     <Sparkles />
                 </DropdownMenuItem>
                 <div className="border-gray-200 border-b my-1"></div>
-                <DropdownMenuItem className="flex items-center justify-between text-left">
-                    Настройки
-                    <Settings />
-                </DropdownMenuItem>
+                <ProfileSettings />
                 <DropdownMenuItem
                     className="flex items-center justify-between text-left"
                     onClick={() =>

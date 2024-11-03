@@ -1,5 +1,3 @@
-// app/components/ui/app-sidebar.tsx
-
 "use client"; // Убедитесь, что файл является клиентским
 
 import {
@@ -10,6 +8,7 @@ import {
     Settings,
     LayoutDashboard,
 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import {
     Sidebar,
     SidebarContent,
@@ -22,6 +21,14 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { AccountProfileDropdown } from "@/components/shared/account-profile-dropdown";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "./tooltip";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 // Определение типа для элемента меню
 interface MenuItem {
@@ -73,6 +80,23 @@ const items: MenuItem[] = [
 ];
 
 export function AppSidebar() {
+    const { theme, setTheme } = useTheme();
+    const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+
+    useEffect(() => {
+        // Сохраняем текущее состояние темы в localStorage
+        const savedTheme = localStorage.getItem("theme") || "light";
+        setTheme(savedTheme);
+        setIsDarkMode(savedTheme === "dark");
+    }, [setTheme]);
+
+    const onClick = () => {
+        const newTheme = isDarkMode ? "light" : "dark";
+        setTheme(newTheme);
+        setIsDarkMode(!isDarkMode);
+        localStorage.setItem("theme", newTheme);
+    };
+
     return (
         <Sidebar>
             <SidebarContent>
@@ -97,6 +121,22 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <div className="ml-auto">
+                                <Switch
+                                    className="my-2"
+                                    onClick={onClick}
+                                    checked={isDarkMode}
+                                />
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Сменить тему</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
                 <AccountProfileDropdown />
             </SidebarFooter>
         </Sidebar>

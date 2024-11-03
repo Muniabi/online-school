@@ -27,8 +27,10 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
     if (status === "loading") {
         return (
             <div className="flex items-center gap-2">
-                <Skeleton className="h-10 w-24" /> {/* Скелетон для кнопки входа */}
-                <Skeleton className="h-10 w-24" /> {/* Скелетон для кнопки регистрации */}
+                <Skeleton className="h-10 w-24" />{" "}
+                {/* Скелетон для кнопки входа */}
+                <Skeleton className="h-10 w-24" />{" "}
+                {/* Скелетон для кнопки регистрации */}
             </div>
         );
     }
@@ -66,7 +68,9 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                                     alt={session.user.name || "User"}
                                 />
                                 <AvatarFallback>
-                                    {session.user.name ? session.user.name.charAt(0) : "?"}
+                                    {session.user.name
+                                        ? session.user.name.charAt(0)
+                                        : "?"}
                                 </AvatarFallback>
                             </Avatar>
                         </Link>

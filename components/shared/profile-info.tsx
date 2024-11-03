@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 interface Props {
     className?: string;

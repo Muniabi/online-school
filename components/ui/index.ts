@@ -61,3 +61,14 @@ export {
     DropdownMenuSubTrigger,
     DropdownMenuRadioGroup,
 } from "./dropdown-menu";
+export {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
