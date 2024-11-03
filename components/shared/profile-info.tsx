@@ -29,8 +29,12 @@ export const ProfileInfo: React.FC<Props> = ({ className }) => {
             </Avatar>
             {/* Данные пользователя */}
             <div className="text-left">
-                <div className="text-sm font-medium text-gray-900">{name}</div>
-                <div className="text-sm text-gray-500">{email}</div>
+                <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    {name}
+                </div>
+                <div className="text-sm text-gray-500 dark:text-slate-200">
+                    {email}
+                </div>
             </div>
         </div>
     );

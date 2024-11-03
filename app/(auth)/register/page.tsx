@@ -94,7 +94,7 @@ export default function RegisterPage() {
                                 >
                                     <Avatar>
                                         <AvatarImage
-                                            src="https://authjs.dev/img/providers/github.svg"
+                                            src="/github.png"
                                             alt="@shadcn"
                                         />
                                     </Avatar>
@@ -124,7 +124,7 @@ export default function RegisterPage() {
                                 >
                                     <Avatar>
                                         <AvatarImage
-                                            src="https://authjs.dev/img/providers/google.svg"
+                                            src="/google.png"
                                             alt="@shadcn"
                                         />
                                     </Avatar>
@@ -211,6 +211,56 @@ export default function RegisterPage() {
                             получать обратную связь и создавать интерактивные
                             занятия для студентов.
                         </CardDescription>
+                        <div className="mx-auto">
+                            <p className="py-2">Регистрация с помощью</p>
+                            <div className="flex items-center justify-evenly">
+                                <button
+                                    onClick={() =>
+                                        signIn("github", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar>
+                                        <AvatarImage
+                                            src="/github.png"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        signIn("vk", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar className="rounded-none">
+                                        <AvatarImage
+                                            src="/vk.png"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        signIn("google", {
+                                            callbackUrl: "/",
+                                            redirect: true,
+                                        })
+                                    }
+                                >
+                                    <Avatar>
+                                        <AvatarImage
+                                            src="/google.png"
+                                            alt="@shadcn"
+                                        />
+                                    </Avatar>
+                                </button>
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent className="space-y-2">
                         <form

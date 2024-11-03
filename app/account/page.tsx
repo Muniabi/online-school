@@ -30,7 +30,7 @@ export default function SkeletonDemo() {
     }, []);
 
     return (
-        <div className="flex items-center space-x-4 m-2">
+        <div className="flex items-center space-x-4 m-2 dark:bg-[--bg-color-dark]">
             {loading ? (
                 // Показать скелетон во время загрузки
                 <div className="flex items-center space-x-4">

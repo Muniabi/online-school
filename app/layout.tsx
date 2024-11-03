@@ -24,7 +24,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={montserrat.className}>
-                <main className="min-h-screen">
+                <main className="min-h-screen dark:bg-[--bg-color-dark]">
                     <Providers>
                         <ClientLayout>{children}</ClientLayout>
                     </Providers>

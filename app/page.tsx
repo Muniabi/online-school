@@ -1,3 +1,3 @@
 export default function Home() {
-    return <div className="">Online School</div>;
+    return <div className="dark:bg-[--bg-color-dark]">Online School</div>;
 }

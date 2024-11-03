@@ -69,7 +69,7 @@ export default function LoginPage() {
                         <CardTitle className="text-center">Вход</CardTitle>
                         <div className="mx-auto">
                             <p className="py-2">Войти с помощью</p>
-                            <div className="flex items-center justify-evenly">
+                            <div className="flex items-center justify-around">
                                 <button
                                     onClick={() =>
                                         signIn("github", {
@@ -80,7 +80,7 @@ export default function LoginPage() {
                                 >
                                     <Avatar>
                                         <AvatarImage
-                                            src="https://authjs.dev/img/providers/github.svg"
+                                            src="/github.png"
                                             alt="@shadcn"
                                         />
                                     </Avatar>
@@ -110,7 +110,7 @@ export default function LoginPage() {
                                 >
                                     <Avatar>
                                         <AvatarImage
-                                            src="https://authjs.dev/img/providers/google.svg"
+                                            src="/google.png"
                                             alt="@shadcn"
                                         />
                                     </Avatar>

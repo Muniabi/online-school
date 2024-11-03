@@ -1,4 +1,4 @@
-"use client"; // Убедитесь, что файл является клиентским
+"use client";
 
 import {
     Calendar,
@@ -30,7 +30,6 @@ import {
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-// Определение типа для элемента меню
 interface MenuItem {
     title: string;
     url: string;
@@ -40,51 +39,22 @@ interface MenuItem {
     >;
 }
 
-// Menu items.
 const items: MenuItem[] = [
-    {
-        title: "Главная",
-        url: "/",
-        icon: Home,
-    },
-    {
-        title: "Dashboard",
-        url: "/account",
-        icon: LayoutDashboard,
-    },
-    {
-        title: "Расписание",
-        url: "/account/schedule",
-        icon: Calendar,
-    },
-    {
-        title: "Домашнее задание",
-        url: "/account/homeworks",
-        icon: Calendar,
-    },
-    {
-        title: "Сообщения",
-        url: "#",
-        icon: MessageCircle,
-    },
-    {
-        title: "Группы",
-        url: "#",
-        icon: Users,
-    },
-    {
-        title: "Настройки",
-        url: "#",
-        icon: Settings,
-    },
+    { title: "Главная", url: "/", icon: Home },
+    { title: "Dashboard", url: "/account", icon: LayoutDashboard },
+    { title: "Расписание", url: "/account/schedule", icon: Calendar },
+    { title: "Домашнее задание", url: "/account/homeworks", icon: Calendar },
+    { title: "Сообщения", url: "#", icon: MessageCircle },
+    { title: "Группы", url: "#", icon: Users },
+    { title: "Настройки", url: "#", icon: Settings },
 ];
 
 export function AppSidebar() {
     const { theme, setTheme } = useTheme();
-    const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
-        // Сохраняем текущее состояние темы в localStorage
+        // Получаем сохраненную тему из localStorage или устанавливаем светлую по умолчанию
         const savedTheme = localStorage.getItem("theme") || "light";
         setTheme(savedTheme);
         setIsDarkMode(savedTheme === "dark");
@@ -101,7 +71,7 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-sm text-slate-800">
+                    <SidebarGroupLabel className="text-sm text-slate-800 dark:text-white">
                         KuberCode Личный Кабинет
                     </SidebarGroupLabel>
                     <SidebarGroupContent>

@@ -15,7 +15,7 @@ body {
 @layer base {
     :root {
         --bg-color-light: #fff;
-        --bg-color-dark: #1a1d1a;
+        --bg-color-dark: #191919;
         --button-bg: #8948ff;
         --purple: #8948ff;
         --yellow: #ffb870;
