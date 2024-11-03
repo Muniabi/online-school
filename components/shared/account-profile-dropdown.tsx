@@ -9,6 +9,7 @@ import { signOut, useSession } from "next-auth/react";
 import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
 import { ProfileInfo } from "./profile-info";
 import { ProfileSettings } from "./profile-settings";
+import { ProSubscriptionInfo } from "./subscription/subscription";
 
 export const AccountProfileDropdown = ({
     className,
@@ -47,7 +48,7 @@ export const AccountProfileDropdown = ({
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center justify-between">
+            <DropdownMenuTrigger className="flex items-center justify-between ">
                 {/* Аватар и информация о пользователе */}
                 <ProfileInfo />
                 {/* Иконка */}
@@ -56,12 +57,13 @@ export const AccountProfileDropdown = ({
             <DropdownMenuContent side={menuSide} className="px-2 pt-2">
                 {/* Аватар и информация о пользователе */}
                 <ProfileInfo />
-                <div className="border-gray-200 border-b my-1"></div>
-                <DropdownMenuItem className="flex items-center justify-between text-left">
+                <div className="border-gray-200 border-b my-1 dark:border-[#3E3E3E]"></div>
+                {/* <DropdownMenuItem className="flex items-center justify-between text-left">
                     Получить PRO
                     <Sparkles />
-                </DropdownMenuItem>
-                <div className="border-gray-200 border-b my-1"></div>
+                </DropdownMenuItem> */}
+                <ProSubscriptionInfo />
+                <div className="border-gray-200 border-b my-1 dark:border-[#3E3E3E]"></div>
                 <ProfileSettings />
                 <DropdownMenuItem
                     className="flex items-center justify-between text-left"

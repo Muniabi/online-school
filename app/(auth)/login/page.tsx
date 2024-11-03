@@ -51,7 +51,12 @@ export default function LoginPage() {
 
         if (!result?.error) {
             toast.success("Успешный вход", {
-                description: "Вы успешно вошли в систему.",
+                style: {
+                    background: "#4CAF50", // Цвет фона
+                    color: "#FFFFFF", // Цвет текста
+                    borderRadius: "8px",
+                },
+                duration: 5000, // Продолжительность отображения
             });
             window.location.href = "/";
         } else {

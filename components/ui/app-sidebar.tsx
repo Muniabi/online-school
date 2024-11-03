@@ -74,6 +74,7 @@ export function AppSidebar() {
                     <SidebarGroupLabel className="text-sm text-slate-800 dark:text-white">
                         KuberCode Личный Кабинет
                     </SidebarGroupLabel>
+                    <div className="border-b border-slate-400 dark:border-slate-300  my-2"></div>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
@@ -90,11 +91,16 @@ export function AppSidebar() {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter>
+            <SidebarFooter className="border-t border-slate-300">
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <div className="ml-auto">
+                            <div className="flex items-center justify-between">
+                                {isDarkMode ? (
+                                    <p>Темная тема</p>
+                                ) : (
+                                    <p>Светлая тема</p>
+                                )}
                                 <Switch
                                     className="my-2"
                                     onClick={onClick}

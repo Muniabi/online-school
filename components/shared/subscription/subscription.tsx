@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { DropdownMenuItem } from "../ui/dropdown-menu";
-import { Settings, X } from "lucide-react";
+import { DropdownMenuItem } from "@/components/ui/index";
+import { Sparkles, X } from "lucide-react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -12,24 +12,24 @@ import {
 } from "@/components/ui/index";
 import { toast } from "sonner";
 
-interface ProfileSettingsProps {
+interface ProSubscriptionInfoProps {
     className?: string;
 }
 
-export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
+export const ProSubscriptionInfo: React.FC<ProSubscriptionInfoProps> = ({
     className,
 }) => {
     const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     const onClick = () => {
-        // TODO: Сохранить настройки
-        toast.success("Настройки сохранены", {
+        // TODO: Логика для получения PRO подписки
+        toast.success("Подписка на PRO активирована!", {
             style: {
-                background: "#4CAF50", // Зелёный фон
-                color: "#FFFFFF", // Белый текст
-                borderRadius: "8px", // Закругленные углы
-                padding: "16px", // Внутренние отступы
+                background: "#4CAF50", // Цвет фона
+                color: "#FFFFFF", // Цвет текста
+                borderRadius: "8px",
             },
+            duration: 5000, // Продолжительность отображения
         });
     };
 
@@ -42,14 +42,14 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
                     setIsAlertOpen(true); // Открываем AlertDialog вручную
                 }}
             >
-                Настройки
-                <Settings />
+                Получить PRO
+                <Sparkles />
             </DropdownMenuItem>
             <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle className="text-lg font-semibold">
-                            Настройки
+                            Подписка на PRO
                         </AlertDialogTitle>
                         {/* Иконка для закрытия */}
                         <X
@@ -57,12 +57,25 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
                             onClick={() => setIsAlertOpen(false)}
                         />
                         <AlertDialogDescription>
-                            Это настройки профиля
+                            <p className="mb-2">
+                                Получите доступ к эксклюзивным возможностям,
+                                включая:
+                            </p>
+                            <ul className="list-disc pl-5 mb-2">
+                                <li>Приоритетная поддержка</li>
+                                <li>
+                                    Неограниченные возможности использования
+                                </li>
+                                <li>
+                                    Доступ к специальным функциям и обновлениям
+                                </li>
+                            </ul>
+                            <p className="font-semibold">Цена: $9.99 в месяц</p>
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogAction onClick={() => onClick()}>
-                            Сохранить
+                            Активировать PRO
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
