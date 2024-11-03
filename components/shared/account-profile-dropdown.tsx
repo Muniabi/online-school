@@ -5,10 +5,10 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { signOut, useSession } from "next-auth/react";
-import { ChevronsUpDown } from "lucide-react";
-import { Button } from "./button";
+import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
+import { ProfileInfo } from "./profile-info";
 
 export const AccountProfileDropdown = ({
     className,
@@ -30,31 +30,25 @@ export const AccountProfileDropdown = ({
         <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center justify-between">
                 {/* Аватар и информация о пользователе */}
-                <div className="flex items-center space-x-3">
-                    <Avatar>
-                        <AvatarImage
-                            src={
-                                session.user.image ||
-                                "https://github.com/shadcn.png"
-                            }
-                            alt={name || "Пользователь"}
-                        />
-                        <AvatarFallback>{name.charAt(0) || "?"}</AvatarFallback>
-                    </Avatar>
-                    {/* Данные пользователя */}
-                    <div className="text-left">
-                        <div className="text-sm font-medium text-gray-900">
-                            {name}
-                        </div>
-                        <div className="text-sm text-gray-500">{email}</div>
-                    </div>
-                </div>
+                <ProfileInfo />
                 {/* Иконка */}
                 <ChevronsUpDown size={16} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuItem>Настройки</DropdownMenuItem>
+            <DropdownMenuContent side="right" className="px-2 pt-2">
+                {/* Аватар и информация о пользователе */}
+                <ProfileInfo />
+                <div className="border-gray-200 border-b my-1"></div>
+                <DropdownMenuItem className="flex items-center justify-between text-left">
+                    Получить PRO
+                    <Sparkles />
+                </DropdownMenuItem>
+                <div className="border-gray-200 border-b my-1"></div>
+                <DropdownMenuItem className="flex items-center justify-between text-left">
+                    Настройки
+                    <Settings />
+                </DropdownMenuItem>
                 <DropdownMenuItem
+                    className="flex items-center justify-between text-left"
                     onClick={() =>
                         signOut({
                             callbackUrl: "/",
@@ -63,6 +57,7 @@ export const AccountProfileDropdown = ({
                     }
                 >
                     Выйти
+                    <LogOut />
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

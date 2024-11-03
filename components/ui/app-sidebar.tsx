@@ -2,7 +2,14 @@
 
 "use client"; // Убедитесь, что файл является клиентским
 
-import { Calendar, Home, MessageCircle, Users, Settings } from "lucide-react";
+import {
+    Calendar,
+    Home,
+    MessageCircle,
+    Users,
+    Settings,
+    LayoutDashboard,
+} from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -14,9 +21,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Button } from "./button";
-import { signOut } from "next-auth/react";
-import { AccountProfileDropdown } from "@/components/ui/account-profile-dropdown";
+import { AccountProfileDropdown } from "@/components/shared/account-profile-dropdown";
 
 // Определение типа для элемента меню
 interface MenuItem {
@@ -36,13 +41,18 @@ const items: MenuItem[] = [
         icon: Home,
     },
     {
+        title: "Dashboard",
+        url: "/account",
+        icon: LayoutDashboard,
+    },
+    {
         title: "Расписание",
         url: "/account/schedule",
         icon: Calendar,
     },
     {
         title: "Домашнее задание",
-        url: "#",
+        url: "/account/homeworks",
         icon: Calendar,
     },
     {

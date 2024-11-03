@@ -23,47 +23,61 @@ interface Props {
 export const AccountButton: React.FC<Props> = ({ className }) => {
     const { data: session, status } = useSession(); // Добавлен статус сессии
 
-    return (
-        <div className={className}>
-            {status === "loading" ? ( // Проверяем статус загрузки
-                <div className="flex items-center gap-2">
-                    <Skeleton className="h-10 w-24" />{" "}
-                    {/* Скелетон для кнопки входа */}
-                    <Skeleton className="h-10 w-24" />{" "}
-                    {/* Скелетон для кнопки регистрации */}
-                </div>
-            ) : !session ? (
-                <div className="flex items-center gap-2">
-                    <Link href="/login">
-                        <Button variant={"ghost"} className="dark:text-white">
-                            <LockKeyhole size={24} />
-                            Войти
-                        </Button>
-                    </Link>
-                    <Link href="/register">
-                        <Button>Регистрация</Button>
-                    </Link>
-                </div>
-            ) : (
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Link href="/account">
-                                <Avatar>
-                                    <AvatarImage
-                                        src="https://github.com/shadcn.png"
-                                        alt="@shadcn"
-                                    />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                            </Link>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Профиль</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            )}
-        </div>
-    );
+    // Проверяем, загружается ли сессия
+    if (status === "loading") {
+        return (
+            <div className="flex items-center gap-2">
+                <Skeleton className="h-10 w-24" /> {/* Скелетон для кнопки входа */}
+                <Skeleton className="h-10 w-24" /> {/* Скелетон для кнопки регистрации */}
+            </div>
+        );
+    }
+
+    // Если пользователь не аутентифицирован
+    if (status === "unauthenticated") {
+        return (
+            <div className="flex items-center gap-2">
+                <Link href="/login">
+                    <Button variant={"ghost"} className="dark:text-white">
+                        <LockKeyhole size={24} />
+                        Войти
+                    </Button>
+                </Link>
+                <Link href="/register">
+                    <Button>Регистрация</Button>
+                </Link>
+            </div>
+        );
+    }
+
+    // Если пользователь аутентифицирован
+    if (status === "authenticated" && session?.user) {
+        return (
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Link href="/account">
+                            <Avatar>
+                                <AvatarImage
+                                    src={
+                                        session.user.image ||
+                                        "https://github.com/shadcn.png"
+                                    }
+                                    alt={session.user.name || "User"}
+                                />
+                                <AvatarFallback>
+                                    {session.user.name ? session.user.name.charAt(0) : "?"}
+                                </AvatarFallback>
+                            </Avatar>
+                        </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Профиль</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        );
+    }
+
+    return null;
 };
