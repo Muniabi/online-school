@@ -42,7 +42,7 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                 <Link href="/login">
                     <Button variant={"ghost"} className="dark:text-white">
                         <LockKeyhole size={24} />
-                        Войти
+                        Войти
                     </Button>
                 </Link>
                 <Link href="/register">
@@ -54,6 +54,8 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
 
     // Если пользователь аутентифицирован
     if (status === "authenticated" && session?.user) {
+        const avatarSrc = session.user.image || "";
+
         return (
             <TooltipProvider>
                 <Tooltip>
@@ -61,10 +63,7 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                         <Link href="/account">
                             <Avatar>
                                 <AvatarImage
-                                    src={
-                                        session.user.image ||
-                                        "https://github.com/shadcn.png"
-                                    }
+                                    src={avatarSrc}
                                     alt={session.user.name || "User"}
                                 />
                                 <AvatarFallback>

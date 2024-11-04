@@ -166,17 +166,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { data: session } = useSession();
 
     // Проверяем, загружены ли данные пользователя
-    const user = session?.user
-        ? {
-              name: session.user.name || "Гость", // Имя пользователя
-              email: session.user.email || "", // Email пользователя
-              avatar: session.user.image || "/avatars/default.jpg", // Ссылка на аватар, если нет, используем значение по умолчанию
-          }
-        : {
-              name: "Гость",
-              email: "",
-              avatar: "/avatars/default.jpg",
-          }; // Используем значения по умолчанию, если нет сессии
+    const user = {
+        name: session?.user?.name ?? "Гость", // Значение по умолчанию, если name отсутствует
+        email: session?.user?.email ?? "", // Пустая строка, если email отсутствует
+        avatar: session?.user?.image ?? "", // Пустая строка, если avatar отсутствует
+    };
 
     return (
         <Sidebar variant="inset" {...props}>

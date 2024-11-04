@@ -91,7 +91,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                 className
             )}
         >
-            <Container className="flex items-center justify-between py-6 px-6">
+            <Container className="flex items-center justify-between py-6 px-10">
                 {/* Левая часть */}
                 <div>
                     <Image

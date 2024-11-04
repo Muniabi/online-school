@@ -1,3 +1,11 @@
+import { MainInfoBlock } from "@/components/shared/landing/main-info";
+import PopularCourses from "@/components/shared/landing/popular-courses";
+
 export default function Home() {
-    return <div className="dark:bg-[--bg-color-dark]">Online School</div>;
+    return (
+        <main className="dark:bg-[--bg-color-dark]">
+            <MainInfoBlock />
+            <PopularCourses />
+        </main>
+    );
 }
