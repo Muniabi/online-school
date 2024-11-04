@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import DashboardPage from "../dashboard/page";
 
 export default function SkeletonDemo() {
     const [loading, setLoading] = useState(true);
@@ -30,28 +31,30 @@ export default function SkeletonDemo() {
     }, []);
 
     return (
-        <div className="flex items-center space-x-4 m-2 dark:bg-[--bg-color-dark]">
-            {loading ? (
-                // Показать скелетон во время загрузки
-                <div className="flex items-center space-x-4">
-                    <Skeleton className="h-12 w-12 rounded-full" />
-                    <div className="space-y-2">
-                        <Skeleton className="h-4 w-[250px]" />
-                        <Skeleton className="h-4 w-[200px]" />
-                    </div>
-                </div>
-            ) : (
-                // Показать данные после загрузки
-                <div className="flex items-center space-x-4">
-                    <div className="h-12 w-12 rounded-full bg-gray-300" />
-                    <div className="space-y-2">
-                        <h2 className="text-lg font-semibold">{data?.name}</h2>
-                        <p className="text-sm text-gray-600">
-                            {data?.description}
-                        </p>
-                    </div>
-                </div>
-            )}
-        </div>
+        // <div className="flex items-center space-x-4 m-2 dark:bg-[--bg-color-dark]">
+        //     {loading ? (
+        //         // Показать скелетон во время загрузки
+        //         <div className="flex items-center space-x-4">
+        //             <Skeleton className="h-12 w-12 rounded-full" />
+        //             <div className="space-y-2">
+        //                 <Skeleton className="h-4 w-[250px]" />
+        //                 <Skeleton className="h-4 w-[200px]" />
+        //             </div>
+        //         </div>
+        //     ) : (
+        //         // Показать данные после загрузки
+        //         <div className="flex items-center space-x-4">
+        //             <div className="h-12 w-12 rounded-full bg-gray-300" />
+        //             <div className="space-y-2">
+        //                 <h2 className="text-lg font-semibold">{data?.name}</h2>
+        //                 <p className="text-sm text-gray-600">
+        //                     {data?.description}
+        //                 </p>
+        //             </div>
+        //         </div>
+        //     )}
+        // </div>
+        // <DashboardPage />
+        <div className="">dfxfgxfvx</div>
     );
 }
