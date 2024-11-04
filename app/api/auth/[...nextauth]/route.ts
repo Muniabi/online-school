@@ -14,6 +14,7 @@ const users = [
         email: "123@mail.ru",
         passwordHash:
             "$2b$12$RUinWLWtvDFppIwGlSjJ4OoVb6MtaGssdwTiiMFWjTz4wrGMGdibG",
+        premium: true,
     },
     {
         id: "2",
@@ -22,6 +23,7 @@ const users = [
         email: "kaktus@mail.ru",
         passwordHash:
             "$2b$12$RUinWLWtvDFppIwGlSjJ4OoVb6MtaGssdwTiiMFWjTz4wrGMGdibG",
+        premium: false,
     },
 ];
 
@@ -70,6 +72,7 @@ export const authOptions: NextAuthOptions = {
                         id: user.id,
                         name: `${user.firstName} ${user.lastName}`,
                         email: user.email,
+                        premium: user.premium, // Добавляем статус подписки
                     };
                 }
 
