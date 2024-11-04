@@ -36,14 +36,13 @@ export const ProSubscriptionInfo: React.FC<ProSubscriptionInfoProps> = ({
     return (
         <>
             <DropdownMenuItem
-                className="flex items-center justify-between text-left"
                 onClick={(e) => {
                     e.preventDefault(); // Предотвращаем закрытие DropdownMenu
                     setIsAlertOpen(true); // Открываем AlertDialog вручную
                 }}
             >
-                Получить PRO
                 <Sparkles />
+                Получить PRO
             </DropdownMenuItem>
             <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
                 <AlertDialogContent>

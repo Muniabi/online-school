@@ -3,15 +3,17 @@
 import * as React from "react";
 import {
     BookOpen,
-    Bot,
+    Calendar,
     Command,
     Frame,
+    LayoutDashboard,
     LifeBuoy,
     Map,
+    MessageCircle,
     PieChart,
     Send,
-    Settings2,
-    SquareTerminal,
+    Settings,
+    Users,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -28,75 +30,87 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
+import { ThemeSelect } from "./shared/theme-select";
 
 const data = {
     navMain: [
         {
-            title: "Playground",
-            url: "#",
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
+            title: "Dashboard",
+            url: "/account",
+            icon: LayoutDashboard,
         },
         {
-            title: "Models",
-            url: "#",
-            icon: Bot,
+            title: "Расписание",
+            url: "/account/schedule",
+            icon: Calendar,
             items: [
                 {
                     title: "Genesis",
                     url: "#",
                 },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
             ],
         },
         {
-            title: "Documentation",
-            url: "#",
+            title: "Домашнее задание",
+            url: "/account/homeworks",
             icon: BookOpen,
             items: [
                 {
                     title: "Introduction",
                     url: "#",
                 },
+            ],
+        },
+        {
+            title: "Группы",
+            url: "#",
+            icon: Users,
+            items: [
                 {
-                    title: "Get Started",
+                    title: "General",
                     url: "#",
                 },
                 {
-                    title: "Tutorials",
+                    title: "Team",
                     url: "#",
                 },
                 {
-                    title: "Changelog",
+                    title: "Billing",
+                    url: "#",
+                },
+                {
+                    title: "Limits",
                     url: "#",
                 },
             ],
         },
         {
-            title: "Settings",
+            title: "Сообщения",
             url: "#",
-            icon: Settings2,
+            icon: MessageCircle,
+            items: [
+                {
+                    title: "General",
+                    url: "#",
+                },
+                {
+                    title: "Team",
+                    url: "#",
+                },
+                {
+                    title: "Billing",
+                    url: "#",
+                },
+                {
+                    title: "Limits",
+                    url: "#",
+                },
+            ],
+        },
+        {
+            title: "Настройки",
+            url: "#",
+            icon: Settings,
             items: [
                 {
                     title: "General",
@@ -119,12 +133,12 @@ const data = {
     ],
     navSecondary: [
         {
-            title: "Support",
+            title: "Поддержка",
             url: "#",
             icon: LifeBuoy,
         },
         {
-            title: "Feedback",
+            title: "Обратная связь",
             url: "#",
             icon: Send,
         },
@@ -159,7 +173,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               avatar: session.user.image || "/avatars/default.jpg", // Ссылка на аватар, если нет, используем значение по умолчанию
           }
         : {
-              name: "Пользователь",
+              name: "Гость",
               email: "",
               avatar: "/avatars/default.jpg",
           }; // Используем значения по умолчанию, если нет сессии
@@ -188,9 +202,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarContent>
                 <NavMain items={data.navMain} />
                 <NavProjects projects={data.projects} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
             <SidebarFooter>
+                <NavSecondary items={data.navSecondary} className="mt-auto" />
+                <ThemeSelect />
                 <NavUser user={user} />
             </SidebarFooter>
         </Sidebar>

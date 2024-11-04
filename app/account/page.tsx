@@ -1,60 +1,49 @@
-"use client";
+import { AppSidebar } from "@/components/app-sidebar";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from "@/components/ui/sidebar";
 
-import React, { useState, useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import DashboardPage from "../dashboard/page";
-
-export default function SkeletonDemo() {
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState<{
-        name: string;
-        description: string;
-    } | null>(null);
-
-    // Имитация загрузки данных
-    useEffect(() => {
-        const fetchData = async () => {
-            // Задержка для имитации загрузки данных
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-
-            // Замените на реальную загрузку данных
-            setData({
-                name: "Название продукта",
-                description: "Описание продукта.",
-            });
-
-            // Устанавливаем состояние загрузки в false
-            setLoading(false);
-        };
-
-        fetchData();
-    }, []);
-
+export default function DashboardPage() {
     return (
-        // <div className="flex items-center space-x-4 m-2 dark:bg-[--bg-color-dark]">
-        //     {loading ? (
-        //         // Показать скелетон во время загрузки
-        //         <div className="flex items-center space-x-4">
-        //             <Skeleton className="h-12 w-12 rounded-full" />
-        //             <div className="space-y-2">
-        //                 <Skeleton className="h-4 w-[250px]" />
-        //                 <Skeleton className="h-4 w-[200px]" />
-        //             </div>
-        //         </div>
-        //     ) : (
-        //         // Показать данные после загрузки
-        //         <div className="flex items-center space-x-4">
-        //             <div className="h-12 w-12 rounded-full bg-gray-300" />
-        //             <div className="space-y-2">
-        //                 <h2 className="text-lg font-semibold">{data?.name}</h2>
-        //                 <p className="text-sm text-gray-600">
-        //                     {data?.description}
-        //                 </p>
-        //             </div>
-        //         </div>
-        //     )}
-        // </div>
-        // <DashboardPage />
-        <div className="">dfxfgxfvx</div>
+        <SidebarInset>
+            <header className="flex h-16 shrink-0 items-center gap-2">
+                <div className="flex items-center gap-2 px-4">
+                    <SidebarTrigger className="-ml-1" />
+                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <Breadcrumb>
+                        <BreadcrumbList>
+                            <BreadcrumbItem className="hidden md:block">
+                                <BreadcrumbLink href="/">
+                                    Главная
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="hidden md:block" />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                </div>
+            </header>
+            <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                    <div className="aspect-video rounded-xl bg-stone-100/50 dark:bg-stone-800/50" />
+                    <div className="aspect-video rounded-xl bg-stone-100/50 dark:bg-stone-800/50" />
+                    <div className="aspect-video rounded-xl bg-stone-100/50 dark:bg-stone-800/50" />
+                </div>
+                <div className="min-h-[100vh] flex-1 rounded-xl bg-stone-100/50 md:min-h-min dark:bg-stone-800/50" />
+            </div>
+        </SidebarInset>
     );
 }
