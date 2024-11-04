@@ -194,7 +194,9 @@ export default function RegisterPage() {
                                     </p>
                                 )}
                             </div>
-                            <Button>Зарегистрироваться</Button>
+                            <Button className="mx-auto">
+                                Зарегистрироваться
+                            </Button>
                         </form>
                     </CardContent>
                 </Card>

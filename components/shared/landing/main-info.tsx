@@ -29,7 +29,7 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
                     accident.
                 </p>
                 <Input
-                    className="bg-[#434343] p-6"
+                    className="bg-white dark:placeholder:text-[#CCCCCC] drop-shadow-xl dark:bg-[#434343] p-6"
                     placeholder="Что вы хотите изучать?"
                 />
             </div>
@@ -40,17 +40,17 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
                 <img src="/Card2.png" alt="main-info-img" />
 
                 {/* Блок рейтинга */}
-                <div className="absolute bottom-4 -right-14 flex items-center gap-3 px-[14px] py-[12px] bg-[--bg-gray] rounded-[8px]">
-                    <div className="p-2 bg-[#FFF7EE] rounded-[6px]">
+                <div className="absolute bottom-4 -right-14 flex items-center gap-3 px-[14px] py-[12px] bg-white dark:bg-[--bg-gray] rounded-[8px]">
+                    <div className="p-2 bg-[#FFF7EE] dark:bg-[#FFF7EE] rounded-[6px]">
                         <Star
                             width={20}
                             height={20}
                             className="fill-[--yellow] stroke-[--yellow]"
                         />
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-[#52565C] dark:text-white">
                         {raiting}
-                        <div>Рейтинг</div>
+                        <div className="">Рейтинг</div>
                     </div>
                 </div>
             </div>
