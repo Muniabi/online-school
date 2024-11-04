@@ -40,7 +40,7 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
                 <img src="/Card2.png" alt="main-info-img" />
 
                 {/* Блок рейтинга */}
-                <div className="absolute bottom-4 -right-10 flex items-center gap-3 px-[14px] py-[12px] bg-[--bg-gray] rounded-[8px]">
+                <div className="absolute bottom-4 -right-14 flex items-center gap-3 px-[14px] py-[12px] bg-[--bg-gray] rounded-[8px]">
                     <div className="p-2 bg-[#FFF7EE] rounded-[6px]">
                         <Star
                             width={20}
