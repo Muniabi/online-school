@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/ui/app-sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 import AccountLayout from "./AccountLayout"; // Импортируем клиентский компонент
 
 // Экспортируем метаданные для страницы
