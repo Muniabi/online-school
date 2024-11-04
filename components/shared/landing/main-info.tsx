@@ -16,7 +16,7 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
                 <p className="uppercase text-[--purple] text-xl">
                     НАЧНИ ПУТЬ К УСПЕХУ
                 </p>
-                <h1 className="text-3xl leading-[72px]">
+                <h1 className="text-4xl leading-[72px]">
                     Доступ к более{" "}
                     <span className="text-[--purple]">5000+</span> <br />
                     курсам от <span className="text-[--purple]">300</span>{" "}
