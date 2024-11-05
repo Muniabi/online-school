@@ -5,7 +5,6 @@ import VkProvider from "next-auth/providers/vk";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
-// Интерфейс для типа пользователя
 interface User {
     id: string;
     firstName: string;
@@ -13,24 +12,20 @@ interface User {
     email: string;
     passwordHash: string;
     premium: boolean;
-    avatar?: string; // Добавляем поле для аватара
+    avatar?: string;
 }
 
-// Интерфейс для типа сессии
 interface SessionUser extends User {
-    name: string; // Добавляем поле name
+    name: string;
 }
 
-// Массив с доступными аватарами по умолчанию
 const defaultAvatars = ["avatar1.png", "avatar2.png", "avatar3.png"];
 
-// Функция для выбора случайного аватара
 function getRandomAvatar(): string {
     const randomIndex = Math.floor(Math.random() * defaultAvatars.length);
     return defaultAvatars[randomIndex];
 }
 
-// Переменная с примерными данными пользователей (хранит хэшированные пароли)
 const users: User[] = [
     {
         id: "1",
@@ -40,7 +35,7 @@ const users: User[] = [
         passwordHash:
             "$2b$12$RUinWLWtvDFppIwGlSjJ4OoVb6MtaGssdwTiiMFWjTz4wrGMGdibG",
         premium: true,
-        avatar: "/avatar1.png", // Пример аватара
+        avatar: "/avatar1.png",
     },
     {
         id: "2",
@@ -50,16 +45,15 @@ const users: User[] = [
         passwordHash:
             "$2b$12$RUinWLWtvDFppIwGlSjJ4OoVb6MtaGssdwTiiMFWjTz4wrGMGdibG",
         premium: false,
-        avatar: "", // Пустой аватар, будет использоваться аватар по умолчанию
+        avatar: "",
     },
 ];
 
-// Функция для поиска пользователя по email из переменной users
 async function getUserByEmail(email: string): Promise<User | null> {
     return users.find((user) => user.email === email) || null;
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     providers: [
         GitHubProvider({
             clientId: process.env.GITHUB_ID || "",
@@ -81,11 +75,8 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 if (!credentials) return null;
-
-                // Ищем пользователя по email
                 const user = await getUserByEmail(credentials.email);
 
-                // Проверяем, существует ли пользователь и совпадает ли пароль
                 if (
                     user &&
                     (await bcrypt.compare(
@@ -98,31 +89,27 @@ export const authOptions: NextAuthOptions = {
                         name: `${user.firstName} ${user.lastName}`,
                         email: user.email,
                         premium: user.premium,
-                        avatar: user.avatar || getRandomAvatar(), // Используем случайный аватар, если его нет
+                        avatar: user.avatar || getRandomAvatar(),
                     };
                 }
-
-                // Если пользователь не найден или пароль неверный
                 return null;
             },
         }),
     ],
-
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     },
     callbacks: {
         async session({ session, token }) {
-            // Указываем тип token.user как SessionUser
             if (session?.user) {
-                session.user = token.user as SessionUser; // Приводим к нужному типу
+                session.user = token.user as SessionUser;
             }
             return session;
         },
         async jwt({ token, user }) {
             if (user) {
-                token.user = user as SessionUser; // Приводим к нужному типу
+                token.user = user as SessionUser;
             }
             return token;
         },
