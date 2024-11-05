@@ -20,7 +20,6 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
 
     const handleClick = () => {
         if (!search) {
-            // Проверяем, не пустое ли значение
             toast.error("Поле поиска пустое");
         } else {
             // TODO : Добавить логику поиска
@@ -51,9 +50,8 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
                     Доступ к более{" "}
                     <span className="text-[--purple]">5000+</span> <br />
                     курсам от <span className="text-[--purple]">300</span>{" "}
-                    преподавателей и
-                    <br />
-                    платформы
+                    преподавателей
+                    <br />и платформы
                 </h1>
                 <p className="text-lg text-[#98A0AA]">
                     Various versions have evolved over the years, sometimes by
