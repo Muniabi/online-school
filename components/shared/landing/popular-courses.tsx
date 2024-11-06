@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import { Container } from "../container";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
     Carousel,
+    CarouselApi,
     CarouselContent,
     CarouselItem,
     CarouselNext,
@@ -10,8 +13,8 @@ import {
 } from "@/components/ui/carousel";
 import { Badge, Button } from "@/components/ui";
 import { ArrowUpRight } from "lucide-react";
+import { log } from "console";
 
-// Массив данных для курсов
 const coursesData = [
     {
         id: 1,
@@ -56,19 +59,40 @@ interface PopularCoursesProps {
 }
 
 const PopularCourses = ({ className }: PopularCoursesProps) => {
+    const [api, setApi] = React.useState<CarouselApi>();
+    const [current, setCurrent] = React.useState(0);
+
+    React.useEffect(() => {
+        if (!api) {
+            return;
+        }
+
+        setCurrent(api.selectedScrollSnap() + 1);
+
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1);
+        });
+    }, [api]);
+
     return (
         <div className="bg-[#FFF7EE] dark:bg-[#242424] overflow-hidden">
-            <Container className="flex items-center justify-evenly py-24">
+            <Container className="flex md:gap-0 md:flex-row gap-8 flex-col items-center justify-evenly py-24">
                 {/* Левая часть */}
                 <div className="text-5xl font-[600] leading-[72px]">
-                    Самые <br />{" "}
-                    <span className="text-[--purple]">
-                        Популярные <br /> Курсы
-                    </span>
+                    <p
+                        className={`transition-opacity duration-500 ${
+                            current === 1 ? "opacity-100" : "opacity-0"
+                        }`}
+                    >
+                        Самые <br />
+                        <span className="text-[--purple]">
+                            Популярные <br /> Курсы
+                        </span>
+                    </p>
                 </div>
 
                 {/* Слайдер */}
-                <Carousel className="w-full max-w-xs">
+                <Carousel setApi={setApi} className="w-full max-w-xs">
                     <CarouselContent className="">
                         {coursesData.map((course) => (
                             <CarouselItem key={course.id}>
