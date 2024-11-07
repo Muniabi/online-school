@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/carousel";
 import { Badge, Button } from "@/components/ui";
 import { ArrowUpRight } from "lucide-react";
-import { log } from "console";
 
 const coursesData = [
     {
@@ -61,6 +60,7 @@ interface PopularCoursesProps {
 const PopularCourses = ({ className }: PopularCoursesProps) => {
     const [api, setApi] = React.useState<CarouselApi>();
     const [current, setCurrent] = React.useState(0);
+
 
     React.useEffect(() => {
         if (!api) {
