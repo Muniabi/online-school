@@ -75,7 +75,7 @@ const PopularCourses = ({ className }: PopularCoursesProps) => {
 
     return (
         <div className="bg-[#FFF7EE] dark:bg-[#242424] overflow-hidden">
-            <Container className="flex md:gap-0 md:flex-row gap-8 flex-col items-center justify-evenly py-24">
+            <Container className="flex md:gap-0 md:flex-row gap-8 flex-col items-center justify-evenly py-24 ">
                 {/* Левая часть */}
                 <div className="text-5xl font-[600] leading-[72px]">
                     <p
