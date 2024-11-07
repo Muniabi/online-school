@@ -78,7 +78,7 @@ const PopularCategories: React.FC = () => {
     return (
         <Container className="p-24">
             <div className="flex flex-col rounded-none">
-                <h2 className="z-10 self-start mt-0 text-3xl font-semibold dark:text-white text-black">
+                <h2 className="self-start text-3xl font-semibold dark:text-white text-black">
                     Самые <span className="text-violet-500">популярные</span>{" "}
                     <span className="text-violet-500">Категории</span>
                 </h2>
