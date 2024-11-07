@@ -6,6 +6,32 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Dark theme variables */
+[data-theme="dark"] {
+    --shadowBefore: -4px -4px 12px hsla(0, 0%, 100%, 0.05), 4px 4px 12px #000,
+        inset -22px -14px 14px 2px hsla(0, 0%, 100%, 0),
+        inset 8px 4px 20px 12px transparent;
+
+    --shadowAfter: -4px -4px 12px hsla(0, 0%, 100%, 0), 4px 4px 12px transparent,
+        inset -22px -14px 14px 2px hsla(0, 0%, 100%, 0.015),
+        inset 8px 4px 20px 12px rgba(0, 0, 0, 0.8);
+
+    --shadowDark: -4px -4px 12px hsla(0, 0%, 100%, 0.05), 4px 4px 12px #000,
+        inset -22px -14px 14px 2px hsla(0, 0%, 100%, 0),
+        inset 8px 4px 20px 12px rgba(0, 0, 0, 0.8);
+}
+
+/* Apply light shadow by default */
+.card {
+    box-shadow: var(--shadowBefore);
+    transition: box-shadow 0.3s ease;
+}
+
+/* On hover, apply the 'after' shadow */
+.card:hover {
+    box-shadow: var(--shadowAfter);
+}
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;
@@ -20,6 +46,17 @@ body {
         --purple: #8948ff;
         --yellow: #ffb870;
         --bg-gray: #434343;
+        --shadowBefore: -8px -8px 12px hsla(0, 0%, 100%, 0.8),
+            8px 8px 12px rgba(0, 0, 0, 0.05),
+            inset -2px -2px 4px hsla(0, 0%, 100%, 0),
+            inset 2px 2px 4px transparent;
+        --shadowAfter: -8px -8px 12px hsla(0, 0%, 100%, 0),
+            8px 8px 12px transparent, inset -2px -2px 4px hsla(0, 0%, 100%, 0.1),
+            inset 2px 2px 4px rgba(0, 0, 0, 0.35);
+        --shadowLight: -8px -8px 12px hsla(0, 0%, 100%, 0.8),
+            8px 8px 12px rgba(0, 0, 0, 0.05),
+            inset -2px -2px 4px hsla(0, 0%, 100%, 0),
+            inset 2px 2px 4px transparent;
         --background: 0 0% 100%;
         --foreground: 224 71.4% 4.1%;
         --card: 0 0% 100%;
