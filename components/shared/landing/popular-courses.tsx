@@ -61,7 +61,6 @@ const PopularCourses = ({ className }: PopularCoursesProps) => {
     const [api, setApi] = React.useState<CarouselApi>();
     const [current, setCurrent] = React.useState(0);
 
-
     React.useEffect(() => {
         if (!api) {
             return;

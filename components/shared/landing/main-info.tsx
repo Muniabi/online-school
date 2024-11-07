@@ -35,6 +35,7 @@ export const MainInfoBlock: React.FC<Props> = ({ className }) => {
     };
 
     useEffect(() => {
+        localStorage.setItem("rating", "5.0");
         const storedRating = localStorage.getItem("rating");
         setRating(storedRating);
     }, []);
