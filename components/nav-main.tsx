@@ -48,8 +48,8 @@ export function NavMain({
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild tooltip={item.title}>
                                     <Link href={item.url} passHref>
-                                            <item.icon />
-                                            <span>{item.title}</span>
+                                        <item.icon />
+                                        <span>{item.title}</span>
                                     </Link>
                                 </SidebarMenuButton>
                                 <CollapsibleTrigger asChild>

@@ -43,23 +43,11 @@ const data = {
             title: "Расписание",
             url: "/account/schedule",
             icon: Calendar,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-            ],
         },
         {
             title: "Домашнее задание",
             url: "/account/homeworks",
             icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-            ],
         },
         {
             title: "Группы",
