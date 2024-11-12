@@ -39,7 +39,6 @@ export function NavMain({
             <SidebarMenu>
                 {items.map((item) =>
                     item.items?.length ? (
-                        // Используем Collapsible только если есть вложенные элементы
                         <Collapsible
                             key={item.title}
                             asChild
