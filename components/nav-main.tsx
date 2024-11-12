@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronRight, type LucideIcon } from "lucide-react";
-
 import {
     Collapsible,
     CollapsibleContent,
@@ -47,10 +47,10 @@ export function NavMain({
                         >
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild tooltip={item.title}>
-                                    <a href={item.url}>
-                                        <item.icon />
-                                        <span>{item.title}</span>
-                                    </a>
+                                    <Link href={item.url} passHref>
+                                            <item.icon />
+                                            <span>{item.title}</span>
+                                    </Link>
                                 </SidebarMenuButton>
                                 <CollapsibleTrigger asChild>
                                     <SidebarMenuAction className="data-[state=open]:rotate-90">
@@ -65,11 +65,14 @@ export function NavMain({
                                                 key={subItem.title}
                                             >
                                                 <SidebarMenuSubButton asChild>
-                                                    <a href={subItem.url}>
+                                                    <Link
+                                                        href={subItem.url}
+                                                        passHref
+                                                    >
                                                         <span>
                                                             {subItem.title}
                                                         </span>
-                                                    </a>
+                                                    </Link>
                                                 </SidebarMenuSubButton>
                                             </SidebarMenuSubItem>
                                         ))}
@@ -81,10 +84,10 @@ export function NavMain({
                         // Если вложенных элементов нет, отображаем обычный SidebarMenuItem
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton asChild tooltip={item.title}>
-                                <a href={item.url}>
+                                <Link href={item.url} passHref>
                                     <item.icon />
                                     <span>{item.title}</span>
-                                </a>
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     )

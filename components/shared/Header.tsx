@@ -16,33 +16,6 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/index";
 
-const courses: { title: string; href: string; description: string }[] = [
-    {
-        title: "Рекомендуемые",
-        href: "/docs/primitives/alert-dialog",
-        description:
-            "Курсы, рекомендованные на основе ваших интересов и достижений, чтобы помочь вам развиваться.",
-    },
-    {
-        title: "По направлениям",
-        href: "/docs/primitives/alert-dialog",
-        description:
-            "Изучайте курсы, организованные по направлениям, чтобы углубить свои знания в определённых областях.",
-    },
-    {
-        title: "Реальные кейсы",
-        href: "/docs/primitives/alert-dialog",
-        description:
-            "Работайте над реальными проектами и кейсами, чтобы применять полученные знания на практике.",
-    },
-    {
-        title: "Интенсивы",
-        href: "/docs/primitives/scroll-area",
-        description:
-            "Участвуйте в интенсивных курсах, чтобы быстро освоить новые навыки и технологии.",
-    },
-];
-
 const communitys: { title: string; href: string; description: string }[] = [
     {
         title: "Форум",
@@ -94,55 +67,37 @@ export const Header: React.FC<Props> = ({ className }) => {
             <Container className="flex items-center justify-between py-6 px-10">
                 {/* Левая часть */}
                 <div>
-                    <Image
+                    {/* <Image
                         src={"/logo.png"}
                         alt="Logo"
                         width={106}
                         height={40}
-                    />
+                    /> */}
+                    <p className="text-3xl">Logo</p>
                 </div>
                 {/* Навигация */}
                 <div className="">
                     <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <Link href="/" passHref legacyBehavior>
-                                    <NavigationMenuLink
-                                        className={navigationMenuTriggerStyle()}
-                                    >
-                                        Главная
-                                    </NavigationMenuLink>
-                                </Link>
+                                <NavigationMenuLink
+                                    className={navigationMenuTriggerStyle()}
+                                    href="/"
+                                >
+                                    Главная
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                            <NavigationMenuItem>
+                                <NavigationMenuLink
+                                    className={navigationMenuTriggerStyle()}
+                                    href="/courses"
+                                >
+                                    Курсы
+                                </NavigationMenuLink>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>
-                                    <Link
-                                        href="/courses"
-                                        passHref
-                                        legacyBehavior
-                                    >
-                                        <NavigationMenuLink>
-                                            Курсы
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                        {courses.map((course) => (
-                                            <ListItem
-                                                key={course.title}
-                                                title={course.title}
-                                                href={course.href}
-                                            >
-                                                {course.description}
-                                            </ListItem>
-                                        ))}
-                                    </ul>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger>
-                                    Соревнования
+                                    Мероприятия
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">

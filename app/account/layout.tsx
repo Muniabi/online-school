@@ -13,11 +13,9 @@ export default function AccountPageLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
-            <SidebarProvider>
-                <AppSidebar />
-                {children}
-            </SidebarProvider>
-        </>
+        <SidebarProvider>
+            <AppSidebar />
+            {children}
+        </SidebarProvider>
     );
 }

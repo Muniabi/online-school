@@ -85,7 +85,7 @@ export default function LoginPage() {
                                 >
                                     <Avatar>
                                         <AvatarImage
-                                            src="/github.png"
+                                            src="/github.svg"
                                             alt="@shadcn"
                                         />
                                     </Avatar>
