@@ -80,20 +80,20 @@ export const Header: React.FC<Props> = ({ className }) => {
                     <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <NavigationMenuLink
+                                <Link
                                     className={navigationMenuTriggerStyle()}
                                     href="/"
                                 >
                                     Главная
-                                </NavigationMenuLink>
+                                </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <NavigationMenuLink
+                                <Link
                                     className={navigationMenuTriggerStyle()}
                                     href="/courses"
                                 >
                                     Курсы
-                                </NavigationMenuLink>
+                                </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>
@@ -102,23 +102,30 @@ export const Header: React.FC<Props> = ({ className }) => {
                                 <NavigationMenuContent>
                                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                         <li className="row-span-4">
-                                            <NavigationMenuLink asChild>
-                                                <a
-                                                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-[url('/hackaton.webp')] bg-cover from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                                    href="/"
-                                                >
-                                                    <div className="mb-2 mt-4 text-white text-lg font-medium">
-                                                        Хакатоны
-                                                    </div>
-                                                    <p className="text-sm leading-tight text-stone-200 text-muted-foreground">
-                                                        Участвуйте в хакатонах,
-                                                        где сможете решать
-                                                        реальные задачи и
-                                                        развивать свои навыки в
-                                                        команде.
-                                                    </p>
-                                                </a>
-                                            </NavigationMenuLink>
+                                            <Link
+                                                href="/"
+                                                legacyBehavior
+                                                passHref
+                                            >
+                                                <NavigationMenuLink asChild>
+                                                    <a
+                                                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-[url('/hackaton.webp')] bg-cover from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                                        href="/"
+                                                    >
+                                                        <div className="mb-2 mt-4 text-white text-lg font-medium">
+                                                            Хакатоны
+                                                        </div>
+                                                        <p className="text-sm leading-tight text-stone-200 text-muted-foreground">
+                                                            Участвуйте в
+                                                            хакатонах, где
+                                                            сможете решать
+                                                            реальные задачи и
+                                                            развивать свои
+                                                            навыки в команде.
+                                                        </p>
+                                                    </a>
+                                                </NavigationMenuLink>
+                                            </Link>
                                         </li>
                                         {events.map((event) => (
                                             <ListItem
@@ -151,12 +158,11 @@ export const Header: React.FC<Props> = ({ className }) => {
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
-                                <Link href="/support" legacyBehavior passHref>
-                                    <NavigationMenuLink
-                                        className={navigationMenuTriggerStyle()}
-                                    >
-                                        Поддержка
-                                    </NavigationMenuLink>
+                                <Link
+                                    className={navigationMenuTriggerStyle()}
+                                    href="/support"
+                                >
+                                    Поддержка
                                 </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>
