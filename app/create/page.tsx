@@ -13,14 +13,13 @@ const CreateCoursePage: React.FC<Props> = ({ className }) => {
                     <h1 className="text-3xl text-primary font-extrabold sm:text-5xl">
                         AI Генератор курсов
                         <strong className="font-extrabold text-black sm:block">
-                            {" "}
-                            Increase Conversion.{" "}
+                            Increase Conversion.
                         </strong>
                     </h1>
 
                     <p className="mt-4 sm:text-xl/relaxed">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Nesciunt illo tenetur fuga ducimus numquam ea!
+                        AI Генератор курсов позволяет создавать курсы с помощью
+                        искусственного интеллекта.
                     </p>
 
                     <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -28,7 +27,7 @@ const CreateCoursePage: React.FC<Props> = ({ className }) => {
                             className="block w-full rounded bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-500 sm:w-auto"
                             href="/create/dashboard"
                         >
-                            Get Started
+                            Начать
                         </Link>
                     </div>
                 </div>

@@ -68,10 +68,10 @@ export const Header: React.FC<Props> = ({ className }) => {
                 {/* Левая часть */}
                 <div>
                     {/* <Image
-                        src={"/logo.png"}
+                        src={"/newlogo.svg"}
                         alt="Logo"
-                        width={106}
-                        height={40}
+                        width={250}
+                        height={150}
                     /> */}
                     <p className="text-3xl">Logo</p>
                 </div>
