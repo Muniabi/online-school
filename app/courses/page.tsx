@@ -10,6 +10,7 @@ import {
     BreadcrumbSeparator,
     BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const directions = [
@@ -36,17 +37,22 @@ const CoursesPage = () => {
 
     return (
         <Container className="my-14 px-9 flex flex-col gap-10">
-            <Breadcrumb>
-                <BreadcrumbList>
-                    <BreadcrumbItem className="hidden md:block">
-                        <BreadcrumbLink href="/">Главная</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator className="hidden md:block" />
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>Все курсы</BreadcrumbPage>
-                    </BreadcrumbItem>
-                </BreadcrumbList>
-            </Breadcrumb>
+            <div className="flex items-center justify-between">
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem className="hidden md:block">
+                            <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator className="hidden md:block" />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Все курсы</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+                <Link href="/create">
+                    <Button>Создать курс</Button>
+                </Link>
+            </div>
 
             <div className="flex items-center justify-between">
                 <p className="text-[32px] font-medium">Курсы</p>
