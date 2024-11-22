@@ -4,6 +4,7 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
     interface User {
         premium?: boolean; // Добавляем поле premium
+        avatar?: string; // Добавляем поле avatar
     }
 
     interface Session {

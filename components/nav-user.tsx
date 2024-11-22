@@ -58,7 +58,7 @@ export function NavUser({
 
     // Если аватар не найден в session, пытаемся взять его из localStorage
     if (!userAvatar && id) {
-        userAvatar = getAvatarFromLocalStorage(id);
+        userAvatar = getAvatarFromLocalStorage(id) || "";
     }
 
     // Если аватара нет ни в session, ни в localStorage, используем пустое значение

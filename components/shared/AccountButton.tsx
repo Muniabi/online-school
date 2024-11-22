@@ -27,7 +27,7 @@ function getAvatarFromLocalStorage(userId: string | undefined): string | null {
 
 export const AccountButton: React.FC<Props> = ({ className }) => {
     const { data: session, status } = useSession();
-    const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+    const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         if (session?.user) {
@@ -38,11 +38,11 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
 
             // Если аватар не найден в session, пытаемся взять его из localStorage
             if (!avatar) {
-                avatar = getAvatarFromLocalStorage(userId);
+                avatar = getAvatarFromLocalStorage(userId) || "";
             }
 
-            // Если аватара нет ни в session, ни в localStorage, используем пустое значение
-            setAvatarSrc(avatar || null);
+            // Если аватара нет ни в session, ни в localStorage, используем undefined
+            setAvatarSrc(avatar); // Просто передаем значение avatar
         }
     }, [session]);
 

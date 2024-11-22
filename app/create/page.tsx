@@ -1,11 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-interface Props {
-    className?: string;
-}
-
-const CreateCoursePage: React.FC<Props> = ({ className }) => {
+const CreateCoursePage = () => {
     return (
         <section>
             <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:items-center">

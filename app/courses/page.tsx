@@ -30,7 +30,7 @@ const directions = [
 const CoursesPage = () => {
     const [activeFilter, setActiveFilter] = useState("Все направления");
 
-    const handleButtonClick = (direction) => {
+    const handleButtonClick = (direction: string) => {
         localStorage.setItem("direction", direction);
         setActiveFilter(direction); // Устанавливаем активный фильтр при нажатии
     };
