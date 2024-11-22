@@ -20,27 +20,40 @@ interface Props {
     className?: string;
 }
 
-export const AccountButton: React.FC<Props> = ({ className }) => {
-    const { data: session, status } = useSession(); // Добавлен статус сессии
+const defaultAvatars = ["avatar1.png", "avatar2.png", "avatar3.png"];
 
-    // Проверяем, загружается ли сессия
+function getAvatar(session: any): string {
+    if (session?.user.image) return session.user.image;
+    const savedAvatar = sessionStorage.getItem("randomAvatar");
+    if (savedAvatar) return savedAvatar;
+
+    const randomAvatar =
+        defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
+    sessionStorage.setItem("randomAvatar", randomAvatar);
+    return randomAvatar;
+}
+
+export const AccountButton: React.FC<Props> = ({ className }) => {
+    const { data: session, status } = useSession();
+
     if (status === "loading") {
         return (
             <div className="flex items-center gap-2">
-                <Skeleton className="h-10 w-24" />{" "}
-                {/* Скелетон для кнопки входа */}
-                <Skeleton className="h-10 w-24" />{" "}
-                {/* Скелетон для кнопки регистрации */}
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-24" />
             </div>
         );
     }
 
-    // Если пользователь не аутентифицирован
     if (status === "unauthenticated") {
         return (
             <div className="flex items-center gap-2">
                 <Link href="/login">
-                    <Button variant={"ghost"} className="dark:text-white">
+                    <Button
+                        variant="ghost"
+                        className="dark:text-white"
+                        aria-label="Войти"
+                    >
                         <LockKeyhole size={24} />
                         Войти
                     </Button>
@@ -52,15 +65,14 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
         );
     }
 
-    // Если пользователь аутентифицирован
     if (status === "authenticated" && session?.user) {
-        const avatarSrc = session.user.image || "";
+        const avatarSrc = getAvatar(session);
 
         return (
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Link href="/account">
+                        <Link href="/account" aria-label="Профиль">
                             <Avatar>
                                 <AvatarImage
                                     src={avatarSrc}

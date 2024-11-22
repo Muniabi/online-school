@@ -11,7 +11,7 @@ import { LampContainer } from "@/components/shared/landing/lamp";
 
 export default function Home() {
     return (
-        <main className="dark:bg-[--bg-color-dark]">
+        <main className="dark:bg-black">
             <div className="flex flex-col overflow-hidden">
                 <ContainerScroll
                     titleComponent={

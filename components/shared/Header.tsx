@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Container, AccountButton } from "./index";
-import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -58,25 +57,20 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ className }) => {
     return (
-        <header
-            className={cn(
-                "bg-white dark:bg-[--bg-color-dark] border-[#E7E9EB] border-b dark:border-none dark:bg-[#434343]",
-                className
-            )}
-        >
+        <header className={cn("sticky top-0 z-50", className)}>
             <Container className="max-w-full flex items-center justify-between py-6 px-10">
                 {/* Левая часть */}
-                <div>
+                <div className="bg-[#1E1E1E] py-3 px-4 text-white rounded-full">
                     {/* <Image
                         src={"/newlogo.svg"}
                         alt="Logo"
                         width={250}
                         height={150}
                     /> */}
-                    <p className="text-3xl">Logo</p>
+                    <p className="text-2xl">Logo</p>
                 </div>
                 {/* Навигация */}
-                <div className="">
+                <div className="bg-[#1E1E1E] py-3 px-4 rounded-full">
                     <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
@@ -141,7 +135,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>
-                                    Сообщество
+                                    Авторы
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
@@ -162,7 +156,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                                     className={navigationMenuTriggerStyle()}
                                     href="/support"
                                 >
-                                    Поддержка
+                                    Медиа
                                 </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>
