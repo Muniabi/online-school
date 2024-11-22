@@ -144,6 +144,14 @@ const authOptions: NextAuthOptions = {
                             user.avatar = getRandomAvatar();
                         }
 
+                        // Сохранение аватара в локальное хранилище
+                        if (typeof window !== "undefined") {
+                            localStorage.setItem(
+                                `avatar-${user.id}`,
+                                user.avatar
+                            );
+                        }
+
                         return {
                             id: user.id,
                             name: `${user.firstName} ${user.lastName}`,

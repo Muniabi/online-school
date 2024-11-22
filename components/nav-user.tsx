@@ -6,9 +6,7 @@ import {
     ChevronsUpDown,
     CreditCard,
     LogOut,
-    Sparkles,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
     DropdownMenu,
@@ -29,7 +27,11 @@ import { signOut, useSession } from "next-auth/react";
 import { ProSubscriptionInfo } from "./shared/subscription/subscription";
 import { Badge } from "./ui/badge";
 
-const defaultAvatars = ["avatar1.png", "avatar2.png", "avatar3.png"];
+// Функция для получения аватара из localStorage
+function getAvatarFromLocalStorage(userId: string | undefined): string | null {
+    if (!userId) return null;
+    return localStorage.getItem(`avatar-${userId}`);
+}
 
 export function NavUser({
     user,
@@ -49,12 +51,18 @@ export function NavUser({
     }
 
     // Извлекаем данные пользователя из сессии
-    const { email = "", premium } = session.user;
+    const { email = "", premium, id } = session.user;
 
-    // Определяем аватар
-    const userAvatar =
-        user.avatar ||
-        defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
+    // Сначала пытаемся получить аватар из session
+    let userAvatar = session.user.avatar;
+
+    // Если аватар не найден в session, пытаемся взять его из localStorage
+    if (!userAvatar && id) {
+        userAvatar = getAvatarFromLocalStorage(id);
+    }
+
+    // Если аватара нет ни в session, ни в localStorage, используем пустое значение
+    userAvatar = userAvatar || "";
 
     return (
         <SidebarMenu>
