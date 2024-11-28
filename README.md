@@ -1,8 +1,8 @@
-# Online School
+# Куберкод
 
 ## Документация:
 
--   [ТЗ](./docs/TZ.md)
+-   [Техническое задание](./docs/TZ.md)
 -   [UseCase](./docs/UseCases.md)
 
 ## _на React и Next.js_
@@ -11,7 +11,7 @@
 
 ## Tech
 
-Dillinger uses a number of open source projects to work properly:
+Для правильной работы KuberCode использует ряд проектов с открытым исходным кодом:
 
 -   React – основная библиотека для построения интерфейсов
 -   Next.js – фреймворк для серверного рендеринга и маршрутизации
@@ -22,7 +22,7 @@ Dillinger uses a number of open source projects to work properly:
 
 ## Команды для запуска проекта:
 
-Install the dependencies and devDependencies and start the server.
+Установите зависимости и devDependencies и запустите сервер.
 
 ```sh
 npm i
@@ -46,9 +46,8 @@ npm start
 
 ## Структура проекта:
 
-    •   pages/ – все страницы приложения.
+    •   app/ – все страницы приложения.
     •	components/ – переиспользуемые компоненты UI.
-    •	styles/ – глобальные стили, настроенные с использованием Tailwind.
     •	public/ – статичные файлы, такие как изображения и шрифты.
 
 ## Development
