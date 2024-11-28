@@ -3,7 +3,7 @@
 ## Документация:
 
 -   [ТЗ](./docs/TZ.md)
--   [UseCase](./docs/UseCase.md)
+-   [UseCase](./docs/UseCases.md)
 
 ## _на React и Next.js_
 
