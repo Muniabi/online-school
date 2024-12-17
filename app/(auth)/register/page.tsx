@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation"; // Измените импорт
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -18,14 +18,11 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar, AvatarImage } from "@/components/ui";
 
 import { register } from "@/utils/services/Authentication";
-import { log } from "console";
 
 const formSchema = z.object({
-    userType: z.enum(["student", "author"], {
+    isTeacher: z.boolean({
         required_error: "Тип пользователя обязателен",
     }),
-    firstName: z.string().min(1, { message: "Имя обязательно" }),
-    lastName: z.string().min(1, { message: "Фамилия обязательна" }),
     email: z
         .string()
         .email({ message: "Некорректный адрес электронной почты." }),
@@ -42,21 +39,17 @@ export default function RegisterPage() {
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            userType: "student",
-            firstName: "",
-            lastName: "",
+            isTeacher: false,
             email: "",
             password: "",
         },
     });
 
-    const handleSubmit = () => {};
-
     const onSubmit = async (data: FormData) => {
         console.log(data);
-        let email = "test@test.com";
-        let password = "test";
-        let isTeacher = false;
+        const email = data.email;
+        const password = data.password;
+        const isTeacher = data.isTeacher;
         register(email, password, isTeacher);
         console.log(email, password, isTeacher);
         // Здесь можно добавить логику для отправки данных на сервер
@@ -68,13 +61,13 @@ export default function RegisterPage() {
             <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger
                     value="student"
-                    onClick={() => form.setValue("userType", "student")}
+                    onClick={() => form.setValue("isTeacher", false)}
                 >
                     Студент
                 </TabsTrigger>
                 <TabsTrigger
                     value="author"
-                    onClick={() => form.setValue("userType", "author")}
+                    onClick={() => form.setValue("isTeacher", true)}
                 >
                     Автор
                 </TabsTrigger>
@@ -147,35 +140,6 @@ export default function RegisterPage() {
                             onSubmit={form.handleSubmit(onSubmit)}
                             className="space-y-2"
                         >
-                            <div className="space-y-1">
-                                <Label htmlFor="firstName">Имя</Label>
-                                <Input
-                                    id="firstName"
-                                    placeholder="Имя"
-                                    {...form.register("firstName")}
-                                />
-                                {form.formState.errors.firstName && (
-                                    <p className="text-red-500">
-                                        {
-                                            form.formState.errors.firstName
-                                                .message
-                                        }
-                                    </p>
-                                )}
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="lastName">Фамилия</Label>
-                                <Input
-                                    id="lastName"
-                                    placeholder="Фамилия"
-                                    {...form.register("lastName")}
-                                />
-                                {form.formState.errors.lastName && (
-                                    <p className="text-red-500">
-                                        {form.formState.errors.lastName.message}
-                                    </p>
-                                )}
-                            </div>
                             <div className="space-y-1">
                                 <Label htmlFor="email">Почта</Label>
                                 <Input
@@ -280,35 +244,6 @@ export default function RegisterPage() {
                             className="space-y-2"
                         >
                             <div className="space-y-1">
-                                <Label htmlFor="firstName">Имя</Label>
-                                <Input
-                                    id="firstName"
-                                    placeholder="Имя"
-                                    {...form.register("firstName")}
-                                />
-                                {form.formState.errors.firstName && (
-                                    <p className="text-red-500">
-                                        {
-                                            form.formState.errors.firstName
-                                                .message
-                                        }
-                                    </p>
-                                )}
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="lastName">Фамилия</Label>
-                                <Input
-                                    id="lastName"
-                                    placeholder="Фамилия"
-                                    {...form.register("lastName")}
-                                />
-                                {form.formState.errors.lastName && (
-                                    <p className="text-red-500">
-                                        {form.formState.errors.lastName.message}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="space-y-1">
                                 <Label htmlFor="email">Почта</Label>
                                 <Input
                                     id="email"
@@ -336,9 +271,7 @@ export default function RegisterPage() {
                                     </p>
                                 )}
                             </div>
-                            <Button type="submit" onSubmit={handleSubmit}>
-                                Зарегистрироваться
-                            </Button>
+                            <Button type="submit">Зарегистрироваться</Button>
                         </form>
                     </CardContent>
                 </Card>
