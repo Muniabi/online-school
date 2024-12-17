@@ -17,6 +17,9 @@ import { z } from "zod";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar, AvatarImage } from "@/components/ui";
 
+import { register } from "@/utils/services/Authentication";
+import { log } from "console";
+
 const formSchema = z.object({
     userType: z.enum(["student", "author"], {
         required_error: "Тип пользователя обязателен",
@@ -47,10 +50,17 @@ export default function RegisterPage() {
         },
     });
 
+    const handleSubmit = () => {};
+
     const onSubmit = async (data: FormData) => {
         console.log(data);
+        let email = "test@test.com";
+        let password = "test";
+        let isTeacher = false;
+        register(email, password, isTeacher);
+        console.log(email, password, isTeacher);
         // Здесь можно добавить логику для отправки данных на сервер
-        router.push("/register/verifited");
+        // router.push("/register/verifited");
     };
 
     return (
@@ -326,7 +336,9 @@ export default function RegisterPage() {
                                     </p>
                                 )}
                             </div>
-                            <Button type="submit">Зарегистрироваться</Button>
+                            <Button type="submit" onSubmit={handleSubmit}>
+                                Зарегистрироваться
+                            </Button>
                         </form>
                     </CardContent>
                 </Card>
