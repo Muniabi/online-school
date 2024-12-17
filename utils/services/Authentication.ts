@@ -38,7 +38,10 @@ export const register = async (
         });
         console.log("response", response.data);
 
-        return response.data;
+        return {
+            status: response.status,
+            data: response.data,
+        };
     } catch (error) {
         const err = error as AxiosError;
         if (err.response?.status === 401) {
