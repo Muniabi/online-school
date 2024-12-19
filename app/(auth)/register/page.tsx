@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar, AvatarImage } from "@/components/ui";
-
 import { register } from "@/utils/services/Authentication";
 
 const formSchema = z.object({
@@ -47,12 +46,15 @@ export default function RegisterPage() {
 
     const onSubmit = async (data: FormData) => {
         console.log(data);
+
         const email = data.email;
         const password = data.password;
         const isTeacher = data.isTeacher;
+
+        // Передаем isTeacher в функцию register
         register(email, password, isTeacher);
-        console.log(email, password, isTeacher);
-        // Здесь можно добавить логику для отправки данных на сервер
+
+        // Можно добавить логику для перенаправления
         // router.push("/register/verifited");
     };
 

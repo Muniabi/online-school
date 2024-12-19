@@ -1,5 +1,6 @@
 "use client";
 
+import { login } from "@/utils/services/Authentication";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,13 +44,11 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (data: FormData) => {
-        const result = await signIn("credentials", {
-            redirect: false,
-            email: data.email,
-            password: data.password,
-        });
+        const email = data.email;
+        const password = data.password;
+        const response = await login(email, password);
 
-        if (!result?.error) {
+        if (!response?.error) {
             toast.success("Успешный вход", {
                 style: {
                     background: "#4CAF50", // Цвет фона

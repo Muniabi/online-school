@@ -10,6 +10,7 @@ interface RegisterResponse {
 }
 
 interface LoginResponse {
+    [x: string]: any;
     data: {
         accessToken: {
             accessToken: {
@@ -37,6 +38,8 @@ export const register = async (
             isTeacher,
         });
         console.log("response", response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("email", email);
 
         return {
             status: response.status,
@@ -81,6 +84,6 @@ export const login = async (
     }
 };
 
-export const logout = async () => {
-    // Логика для logout будет зависеть от вашего API. Если нужно, напишите, и я помогу её реализовать.
+export const logOut = async () => {
+    // Логика для logOut будет зависеть от вашего API. Если нужно, напишите, и я помогу её реализовать.
 };
