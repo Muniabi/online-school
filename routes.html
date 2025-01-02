@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>REST API Documentation</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, Helvetica, Arial, sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f8f9fa;
+            }
+            .endpoint {
+                background: white;
+                border-radius: 4px;
+                padding: 20px;
+                margin: 20px 0;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            .method {
+                display: inline-block;
+                padding: 6px 12px;
+                border-radius: 3px;
+                font-weight: bold;
+                color: white;
+                margin-right: 10px;
+            }
+            .get {
+                background-color: #61affe;
+            }
+            .post {
+                background-color: #49cc90;
+            }
+            .put {
+                background-color: #fca130;
+            }
+            .delete {
+                background-color: #f93e3e;
+            }
+            .url {
+                background: #f0f0f0;
+                padding: 10px;
+                border-radius: 4px;
+                font-family: monospace;
+            }
+            pre {
+                background: #263238;
+                color: #fff;
+                padding: 15px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+            h1 {
+                color: #32325d;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            h2 {
+                color: #3b4151;
+                font-size: 1.2em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Kuber Code REST API Documentation</h1>
+
+        <div class="endpoint">
+            <h2>Регистрация пользователя</h2>
+            <div>
+                <span class="method post">POST</span>
+                <span class="url">http://localhost:8080/auth/register</span>
+            </div>
+            <pre>
+{
+    "email": "user@example.com",
+    "password": "password123",
+    "name": "John Doe"
+}</pre
+            >
+            <pre>
+Ответ:
+{
+    "user": {
+        "id": 1,
+        "email": "user@example.com",
+        "name": "John Doe"
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Вход в систему</h2>
+            <div>
+                <span class="method post">POST</span>
+                <span class="url">http://localhost:8080/auth/login</span>
+            </div>
+            <pre>
+{
+    "email": "user@example.com",
+    "password": "password123"
+}</pre
+            >
+            <pre>
+Ответ:
+{
+    "user": {
+        "id": 1,
+        "email": "user@example.com",
+        "name": "John Doe"
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Обновление токена</h2>
+            <div>
+                <span class="method post">POST</span>
+                <span class="url">http://localhost:8080/auth/refresh</span>
+            </div>
+            <pre>
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+}</pre
+            >
+            <pre>
+Ответ:
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Выход из системы</h2>
+            <div>
+                <span class="method post">POST</span>
+                <span class="url">http://localhost:8080/auth/logout</span>
+            </div>
+            <pre>
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</pre
+            >
+            <pre>
+Ответ:
+{
+    "message": "Успешный выход из системы"
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Получение пользователя по ID</h2>
+            <div>
+                <span class="method get">GET</span>
+                <span class="url">http://localhost:8080/users/1</span>
+            </div>
+            <pre>
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</pre
+            >
+            <pre>
+Ответ:
+{
+    "id": 1,
+    "email": "user@example.com",
+    "name": "John Doe"
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Создание нового пользователя</h2>
+            <div>
+                <span class="method post">POST</span>
+                <span class="url">http://localhost:8080/users</span>
+            </div>
+            <pre>
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+{
+    "name": "Alice"
+}</pre
+            >
+            <pre>
+Ответ:
+{
+    "id": 2,
+    "name": "Alice"
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Обновление пользователя</h2>
+            <div>
+                <span class="method put">PUT</span>
+                <span class="url">http://localhost:8080/users/1</span>
+            </div>
+            <pre>
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+{
+    "name": "Updated Alice"
+}</pre
+            >
+            <pre>
+Ответ:
+{
+    "id": 1,
+    "name": "Updated Alice"
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Удаление пользователя</h2>
+            <div>
+                <span class="method delete">DELETE</span>
+                <span class="url">http://localhost:8080/users/1</span>
+            </div>
+            <pre>
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</pre
+            >
+            <pre>
+Ответ:
+{
+    "message": "Пользователь успешно удален"
+}</pre
+            >
+        </div>
+    </body>
+</html>
