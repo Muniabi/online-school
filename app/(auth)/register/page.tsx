@@ -17,6 +17,7 @@ import { z } from "zod";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar, AvatarImage } from "@/components/ui";
 import { register } from "@/utils/services/Authentication";
+import PasswordInput from "@/components/ui/password-input";
 
 const formSchema = z.object({
     isTeacher: z.boolean({
@@ -158,9 +159,8 @@ export default function RegisterPage() {
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="password">Пароль</Label>
-                                <Input
+                                <PasswordInput
                                     id="password"
-                                    type="password"
                                     placeholder="Пароль"
                                     {...form.register("password")}
                                 />
@@ -261,9 +261,8 @@ export default function RegisterPage() {
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="password">Пароль</Label>
-                                <Input
+                                <PasswordInput
                                     id="password"
-                                    type="password"
                                     placeholder="Пароль"
                                     {...form.register("password")}
                                 />

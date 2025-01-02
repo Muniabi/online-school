@@ -71,22 +71,19 @@
             <h2>Регистрация пользователя</h2>
             <div>
                 <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/auth/register</span>
+                <span class="url">http://localhost:8080/register</span>
             </div>
             <pre>
 {
     "email": "user@example.com",
     "password": "password123",
-    "name": "John Doe"
 }</pre
             >
             <pre>
 Ответ:
 {
     "user": {
-        "id": 1,
         "email": "user@example.com",
-        "name": "John Doe"
     },
     "accessToken": "eyJhbGciOiJIUzI1NiIs...",
     "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
@@ -98,7 +95,7 @@
             <h2>Вход в систему</h2>
             <div>
                 <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/auth/login</span>
+                <span class="url">http://localhost:8080/login</span>
             </div>
             <pre>
 {
@@ -110,9 +107,7 @@
 Ответ:
 {
     "user": {
-        "id": 1,
         "email": "user@example.com",
-        "name": "John Doe"
     },
     "accessToken": "eyJhbGciOiJIUzI1NiIs...",
     "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
@@ -121,10 +116,30 @@
         </div>
 
         <div class="endpoint">
-            <h2>Обновление токена</h2>
+            <h2>Обновление Access токена</h2>
             <div>
                 <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/auth/refresh</span>
+                <span class="url">http://localhost:8080/refresh</span>
+            </div>
+            <pre>
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+}</pre
+            >
+            <pre>
+Ответ:
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+}</pre
+            >
+        </div>
+
+        <div class="endpoint">
+            <h2>Обновление Refresh токена</h2>
+            <div>
+                <span class="method post">POST</span>
+                <span class="url">http://localhost:8080/refresh-token</span>
             </div>
             <pre>
 {
@@ -144,11 +159,12 @@
             <h2>Выход из системы</h2>
             <div>
                 <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/auth/logout</span>
+                <span class="url">http://localhost:8080/logout</span>
             </div>
             <pre>
 Headers:
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</pre
+Authorization: Bearer [accessToken]
+</pre
             >
             <pre>
 Ответ:

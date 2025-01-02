@@ -25,6 +25,7 @@ interface LoginResponse {
     status: number;
 }
 
+// Регистрация пользователя
 export const register = async (
     email: string,
     password: string,
@@ -56,7 +57,9 @@ export const register = async (
         }
     }
 };
+//
 
+// Логин пользователя
 export const login = async (
     email: string,
     password: string
@@ -84,6 +87,37 @@ export const login = async (
     }
 };
 
-export const logOut = async () => {
-    // Логика для logOut будет зависеть от вашего API. Если нужно, напишите, и я помогу её реализовать.
+export const logOut = async (): Promise<{
+    status: number;
+    data: { message: string };
+}> => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+            `${IP}/logout`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        // Очищаем данные авторизации из localStorage
+        localStorage.clear();
+
+        return {
+            status: response.status,
+            data: response.data,
+        };
+    } catch (error) {
+        const err = error as AxiosError;
+        if (err.response?.status === 401) {
+            throw new Error("Ошибка авторизации.");
+        } else if (err.response?.status === 500) {
+            throw new Error("Ошибка сервера. Попробуйте позже.");
+        } else {
+            throw new Error("Ошибка. Проверьте соединение с интернетом.");
+        }
+    }
 };
