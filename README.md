@@ -59,4 +59,59 @@ npm start
 
 MIT
 
+## Авторизация
+
+В проекте используется NextAuth для управления аутентификацией.
+
+### Основные особенности:
+
+-   Вся авторизация проходит через NextAuth
+-   Токены и данные пользователя хранятся в сессии NextAuth
+-   Поддерживается авторизация через социальные сети (GitHub, Google, VK)
+-   Реализована авторизация по email/password
+-   Сессия содержит все необходимые данные пользователя
+
+### Использование данных сессии в компонентах:
+
+```typescript
+const { data: session } = useSession();
+
+// Доступ к данным
+console.log(session?.user?.email);
+console.log(session?.user?.accessToken);
+console.log(session?.user?.isTeacher);
+```
+
+### Доступные методы авторизации:
+
+-   Email/Password
+-   GitHub
+-   Google
+-   VK
+
+### Структура данных пользователя в сессии:
+
+```typescript
+interface User {
+    id: string;
+    email: string;
+    name: string;
+    accessToken: string;
+    isTeacher: boolean;
+}
+```
+
+### Защита роутов:
+
+Для защиты роутов используйте хук useSession:
+
+```typescript
+const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+        redirect("/login");
+    },
+});
+```
+
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"

@@ -28,21 +28,28 @@ function getAvatarFromLocalStorage(userId: string | undefined): string | null {
 export const AccountButton: React.FC<Props> = ({ className }) => {
     const { data: session, status } = useSession();
     const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
+    const [isLocalAuth, setIsLocalAuth] = useState(false);
+    const [localEmail, setLocalEmail] = useState<string | null>(null);
 
     useEffect(() => {
+        // Проверяем наличие токена в localStorage
+        const token = localStorage.getItem("accessToken");
+        const email = localStorage.getItem("email");
+
+        if (token) {
+            setIsLocalAuth(true);
+            setLocalEmail(email);
+        }
+
         if (session?.user) {
             const userId = session.user.id;
-
-            // Сначала пытаемся получить аватар из session
             let avatar = session.user.avatar;
 
-            // Если аватар не найден в session, пытаемся взять его из localStorage
             if (!avatar) {
                 avatar = getAvatarFromLocalStorage(userId) || "";
             }
 
-            // Если аватара нет ни в session, ни в localStorage, используем undefined
-            setAvatarSrc(avatar); // Просто передаем значение avatar
+            setAvatarSrc(avatar);
         }
     }, [session]);
 
@@ -55,7 +62,41 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
         );
     }
 
-    if (status === "unauthenticated") {
+    // Показываем аватар если есть сессия или локальная авторизация
+    if (status === "authenticated" || isLocalAuth) {
+        return (
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Link href="/account" aria-label="Профиль">
+                            <Avatar>
+                                <AvatarImage
+                                    src={avatarSrc || "/default-avatar.png"} // Добавьте дефолтную аватарку
+                                    alt={
+                                        session?.user?.name ||
+                                        localEmail ||
+                                        "User"
+                                    }
+                                />
+                                <AvatarFallback>
+                                    {session?.user?.name
+                                        ? session.user.name.charAt(0)
+                                        : localEmail
+                                        ? localEmail.charAt(0).toUpperCase()
+                                        : "?"}
+                                </AvatarFallback>
+                            </Avatar>
+                        </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Профиль</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        );
+    }
+
+    if (status === "unauthenticated" && !isLocalAuth) {
         return (
             <div className="flex items-center gap-2">
                 <Link href="/login">
@@ -72,33 +113,6 @@ export const AccountButton: React.FC<Props> = ({ className }) => {
                     <Button>Регистрация</Button>
                 </Link>
             </div>
-        );
-    }
-
-    if (status === "authenticated" && session?.user) {
-        return (
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Link href="/account" aria-label="Профиль">
-                            <Avatar>
-                                <AvatarImage
-                                    src={avatarSrc || ""}
-                                    alt={session.user.name || "User"}
-                                />
-                                <AvatarFallback>
-                                    {session.user.name
-                                        ? session.user.name.charAt(0)
-                                        : "?"}
-                                </AvatarFallback>
-                            </Avatar>
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>Профиль</p>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
         );
     }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { login } from "@/utils/services/Authentication";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,6 +36,7 @@ type FormData = z.infer<typeof formSchema>;
 
 // Главный компонент страницы авторизации
 export default function LoginPage() {
+    const router = useRouter();
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -44,24 +46,18 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (data: FormData) => {
-        const email = data.email;
-        const password = data.password;
-        const response = await login(email, password);
+        try {
+            const result = await login(data.email, data.password);
 
-        if (!response?.error) {
-            toast.success("Успешный вход", {
-                style: {
-                    background: "#4CAF50", // Цвет фона
-                    color: "#FFFFFF", // Цвет текста
-                    borderRadius: "8px",
-                },
-                duration: 5000, // Продолжительность отображения
-            });
-            window.location.href = "/";
-        } else {
-            toast.error("Ошибка входа", {
-                description: "Неверный адрес электронной почты или пароль.",
-            });
+            if (result?.ok) {
+                router.push("/dashboard");
+                toast.success("Успешный вход");
+            } else {
+                toast.error("Ошибка входа");
+            }
+        } catch (error) {
+            toast.error("Ошибка при входе");
+            console.error(error);
         }
     };
 

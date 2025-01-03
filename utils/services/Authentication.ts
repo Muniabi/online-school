@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { signIn } from "next-auth/react";
 
 export const IP = "http://localhost:8080";
 
@@ -30,60 +31,54 @@ export const register = async (
     email: string,
     password: string,
     isTeacher: boolean
-): Promise<RegisterResponse> => {
+): Promise<void> => {
     try {
-        console.log("email: ", email);
-        const response = await axios.post(`${IP}/register`, {
-            email,
-            password,
-            isTeacher,
-        });
-        console.log("response", response.data);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("email", email);
+        // Сначала регистрируем пользователя
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/register`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    isTeacher,
+                }),
+            }
+        );
 
-        return {
-            status: response.status,
-            data: response.data,
-        };
-    } catch (error) {
-        const err = error as AxiosError;
-        if (err.response?.status === 401) {
-            throw new Error("Неверный логин или пароль.");
-        } else if (err.response?.status === 500) {
-            throw new Error("Ошибка сервера. Попробуйте позже.");
-        } else {
-            throw new Error("Ошибка. Проверьте соединение с интернетом.");
+        if (!response.ok) {
+            throw new Error("Ошибка при регистрации");
         }
+
+        // После успешной регистрации сразу выполняем вход
+        await login(email, password);
+    } catch (error) {
+        console.error("Ошибка при регистрации:", error);
+        throw error;
     }
 };
 //
 
 // Логин пользователя
-export const login = async (
-    email: string,
-    password: string
-): Promise<LoginResponse> => {
+export const login = async (email: string, password: string) => {
     try {
-        const response = await axios.post(`${IP}/login`, {
+        const result = await signIn("credentials", {
             email,
             password,
+            redirect: false,
         });
 
-        return {
-            status: response.status,
-            data: response.data,
-        };
-    } catch (error) {
-        const err = error as AxiosError;
-
-        if (err.response?.status === 401) {
-            throw new Error("Неверный логин или пароль.");
-        } else if (err.response?.status === 500) {
-            throw new Error("Ошибка сервера. Попробуйте позже.");
-        } else {
-            throw new Error("Ошибка. Проверьте соединение с интернетом.");
+        if (result?.error) {
+            throw new Error(result.error);
         }
+
+        return result;
+    } catch (error) {
+        console.error("Ошибка при входе:", error);
+        throw error;
     }
 };
 
@@ -119,5 +114,37 @@ export const logOut = async (): Promise<{
         } else {
             throw new Error("Ошибка. Проверьте соединение с интернетом.");
         }
+    }
+};
+
+// Функция обновления токена
+export const refreshAccessToken = async (refreshToken: string) => {
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/refresh`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    refreshToken,
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error("Failed to refresh token");
+        }
+
+        return {
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+        };
+    } catch (error) {
+        console.error("Error refreshing token:", error);
+        throw error;
     }
 };
