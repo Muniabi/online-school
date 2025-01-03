@@ -115,16 +115,66 @@
             }
             .container {
                 display: flex;
+                width: 100%;
                 align-items: center;
                 justify-content: space-between;
+                margin-bottom: 20px;
             }
-            .add-btn {
-                background: #49cc90;
+            .controls-container {
+                display: flex;
+                gap: 10px;
+            }
+            .actions-container {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+            .export-btn,
+            .import-btn {
+                background: linear-gradient(135deg, #61affe, #5a9ee7);
                 color: white;
                 border: none;
                 padding: 10px 20px;
-                border-radius: 4px;
+                border-radius: 8px;
                 cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.2s ease;
+            }
+            .export-btn:hover,
+            .import-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(97, 175, 254, 0.2);
+            }
+            .export-btn:active,
+            .import-btn:active {
+                transform: translateY(0);
+            }
+            .add-btn,
+            .clear-all-btn {
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .add-btn {
+                background: linear-gradient(135deg, #49cc90, #47b984);
+                color: white;
+            }
+            .clear-all-btn {
+                background: linear-gradient(135deg, #f93e3e, #e93333);
+                color: white;
+            }
+            .add-btn:hover,
+            .clear-all-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             }
             .popup {
                 display: none;
@@ -132,13 +182,14 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                background: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                background: #1e1e2e;
+                color: #fff;
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
                 z-index: 1000;
                 width: 80%;
                 max-width: 600px;
+                padding: 30px;
             }
             .popup-overlay {
                 display: none;
@@ -153,7 +204,6 @@
             .field-group {
                 margin: 10px 0;
                 padding: 10px;
-                border: 1px solid #ddd;
                 border-radius: 4px;
             }
             .add-field-btn {
@@ -184,9 +234,9 @@
                 color: white;
             }
             .clear-all-btn {
-                background: #e83e8c;
+                background: linear-gradient(135deg, #f93e3e, #e93333);
                 color: white;
-                margin-left: 10px;
+                margin-left: 15px;
             }
             .request-body,
             .response-body {
@@ -242,12 +292,585 @@
                     transform: scale(1);
                 }
             }
+
+            /* Стили для JSON редактора */
+            .json-editor-container {
+                margin: 25px 0;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .editor-header {
+                background: #282a36;
+                padding: 15px 20px;
+                border-bottom: 1px solid #313244;
+            }
+
+            .editor-header span {
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            .editor-controls button {
+                background: #44475a;
+                color: #fff;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .editor-controls button:hover {
+                background: #61affe;
+                transform: translateY(-2px);
+            }
+
+            .CodeMirror {
+                height: 300px !important;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            /* Стили для кнопок */
+            .submit-btn,
+            .clear-all-btn,
+            .add-btn {
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+                border: none;
+                cursor: pointer;
+            }
+
+            .submit-btn {
+                background: linear-gradient(135deg, #49cc90, #47b984);
+                color: white;
+            }
+
+            .clear-all-btn {
+                background: linear-gradient(135deg, #f93e3e, #e93333);
+                color: white;
+                margin-left: 15px;
+            }
+
+            .add-btn {
+                background: linear-gradient(135deg, #61affe, #5a9ee7);
+                color: white;
+            }
+
+            .submit-btn:hover,
+            .clear-all-btn:hover,
+            .add-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            /* Стили для уведомлений */
+            .editor-status {
+                padding: 12px 20px;
+                margin: 10px;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+            .editor-status.success {
+                background: linear-gradient(135deg, #49cc90, #47b984);
+            }
+
+            .editor-status.error {
+                background: linear-gradient(135deg, #f93e3e, #e93333);
+            }
+
+            /* Анимации */
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .popup {
+                animation: fadeIn 0.3s ease-out;
+            }
+
+            .json-editor-container {
+                animation: slideIn 0.3s ease-out;
+            }
+
+            .section {
+                margin: 35px 0;
+                position: relative;
+                padding-top: 30px;
+            }
+
+            .section h3 {
+                color: #94a3b8;
+                font-size: 1.1rem;
+                font-weight: 500;
+                margin-bottom: 20px;
+                position: relative;
+                display: inline-block;
+                padding-bottom: 8px;
+            }
+
+            .section h3::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, #60a5fa, transparent);
+            }
+
+            /* Стили для разделителей секций */
+            .section::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -30px;
+                right: -30px;
+                height: 1px;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(148, 163, 184, 0.1) 15%,
+                    rgba(148, 163, 184, 0.1) 85%,
+                    transparent
+                );
+            }
+
+            /* Убираем верхний разделитель у первой секции */
+            .section:first-of-type::before {
+                display: none;
+            }
+
+            /* Стили для группы полей */
+            .input-group {
+                margin-bottom: 24px;
+                position: relative;
+            }
+
+            .input-group label {
+                display: block;
+                color: #94a3b8;
+                margin-bottom: 8px;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+
+            /* Обновленные стили для основных полей ввода */
+            .input-group input,
+            .input-group select {
+                width: 100%;
+                padding: 12px 16px;
+                border: 1px solid #374151;
+                border-radius: 8px;
+                color: #fff;
+                font-size: 0.95rem;
+                transition: all 0.2s ease;
+            }
+
+            .input-group input:focus,
+            .input-group select:focus {
+                border-color: #60a5fa;
+                box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+                outline: none;
+            }
+
+            /* Стили для кнопок добавления полей */
+            .add-btn {
+                background: #1f2937;
+                color: #60a5fa;
+                border: 1px dashed #374151;
+                padding: 12px 20px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: all 0.2s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .add-btn:hover {
+                background: #2d3748;
+                border-color: #60a5fa;
+            }
+
+            .add-btn::before {
+                content: "+";
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
+
+            /* Обновленные стили для заголовка попапа */
+            .popup-header {
+                padding: 25px 30px;
+                text-align: center;
+                background: transparent;
+                border-bottom: 1px solid #374151;
+            }
+
+            .popup-header h2 {
+                margin: 0;
+                color: #ffffff;
+                font-size: 1.5rem;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .popup-header h2::before {
+                content: "✏️";
+                font-size: 1.2rem;
+            }
+
+            /* Обновленные стили для подвала формы */
+            .popup-footer {
+                background: linear-gradient(to right, #1f2937, #111827);
+                padding: 20px 30px;
+                border-top: 1px solid #374151;
+            }
+
+            .cancel-btn {
+                background: #44475a;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                margin-left: 10px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .cancel-btn:hover {
+                background: #6c7693;
+                transform: translateY(-2px);
+            }
+
+            .popup-footer {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+
+            /* Стили для попапа и оверлея */
+            .popup-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(5px);
+                z-index: 999;
+            }
+
+            .popup {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 90%;
+                max-width: 800px;
+                max-height: 90vh;
+                background: #1a1b26;
+                border-radius: 16px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                overflow-y: auto;
+                padding: 0;
+            }
+
+            /* Шапка формы */
+            .popup-header {
+                background: #1a1b26;
+                padding: 20px 30px;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+            }
+
+            .popup-header {
+                text-align: center;
+                margin: 0;
+                color: #fff;
+                font-size: 1.5rem;
+            }
+
+            /* Тело формы */
+            #newRequestForm {
+                padding: 30px;
+            }
+
+            .input-group {
+                margin-bottom: 24px;
+            }
+
+            .input-group label {
+                display: block;
+                color: #9ca3af;
+                margin-bottom: 8px;
+                font-size: 0.9rem;
+            }
+
+            .input-group input,
+            .input-group select {
+                width: 100%;
+                padding: 12px 16px;
+                background: #1f2937;
+                border: 1px solid #374151;
+                border-radius: 8px;
+                color: #fff;
+                font-size: 1rem;
+                transition: all 0.2s ease;
+            }
+
+            .input-group input:focus,
+            .input-group select:focus {
+                border-color: #60a5fa;
+                box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+                outline: none;
+            }
+
+            /* JSON редактор */
+            .json-editor-container {
+                margin: 20px 0;
+                opacity: 0;
+                animation: fadeIn 0.3s ease forwards;
+            }
+
+            .editor-header {
+                background: #1f2937;
+                padding: 15px 20px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .editor-header span {
+                color: #9ca3af;
+                font-size: 0.9rem;
+            }
+
+            /* Кнопки в редакторе */
+            .editor-controls button {
+                background: #374151;
+                color: #fff;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-left: 8px;
+            }
+
+            .editor-controls button:hover {
+                background: #4b5563;
+                transform: translateY(-1px);
+            }
+
+            /* Подвал формы */
+            .popup-footer {
+                background: #1f2937;
+                padding: 20px 30px;
+                border-top: 1px solid #374151;
+                display: flex;
+                justify-content: flex-end;
+                gap: 12px;
+                position: sticky;
+                bottom: 0;
+                z-index: 2;
+            }
+
+            .submit-btn,
+            .cancel-btn {
+                padding: 10px 20px;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .submit-btn {
+                background: #60a5fa;
+                color: #fff;
+            }
+
+            .cancel-btn {
+                background: #374151;
+                color: #fff;
+            }
+
+            .submit-btn:hover,
+            .cancel-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Анимации */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Стили для скроллбара */
+            .popup::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .popup::-webkit-scrollbar-track {
+                background: #1f2937;
+            }
+
+            .popup::-webkit-scrollbar-thumb {
+                background: #374151;
+                border-radius: 4px;
+            }
+
+            .popup::-webkit-scrollbar-thumb:hover {
+                background: #4b5563;
+            }
+
+            /* Секции формы */
+            .section {
+                margin: 30px 0;
+            }
+
+            .section h3 {
+                color: #9ca3af;
+                font-size: 1.1rem;
+                margin-bottom: 16px;
+            }
+
+            /* CodeMirror кастомизация */
+            .CodeMirror {
+                border-radius: 0 0 8px 8px;
+                font-family: "Fira Code", monospace;
+                line-height: 1.6;
+            }
+
+            .delete-field-btn {
+                background: #ef4444 !important;
+                color: white;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .delete-field-btn:hover {
+                background: #dc2626 !important;
+            }
+
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /* Обновляем стили для кнопок в редакторе */
+            .editor-controls {
+                display: flex;
+                gap: 8px;
+            }
+
+            .editor-controls button {
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                transition: all 0.2s ease;
+            }
+
+            /* Стили для Format и Validate кнопок */
+            .format-btn {
+                background: #60a5fa !important;
+            }
+
+            .validate-btn {
+                background: #34d399 !important;
+            }
+
+            .format-btn:hover {
+                background: #3b82f6 !important;
+            }
+
+            .validate-btn:hover {
+                background: #10b981 !important;
+            }
+
+            .editor-status {
+                padding: 8px 12px;
+                margin-top: 8px;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+            }
+
+            .editor-status.success {
+                background: rgba(52, 211, 153, 0.1);
+                color: #34d399;
+                border: 1px solid rgba(52, 211, 153, 0.2);
+            }
+
+            .editor-status.error {
+                background: rgba(239, 68, 68, 0.1);
+                color: #ef4444;
+                border: 1px solid rgba(239, 68, 68, 0.2);
+            }
         </style>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/lint/json-lint.min.js"></script>
     </head>
     <body>
         <div class="popup-overlay" id="overlay"></div>
         <div class="popup" id="popup">
-            <h2>Создать новый запрос</h2>
+            <h2 class="popup-header">Создать новый запрос</h2>
             <form id="newRequestForm">
                 <div class="input-group">
                     <label>Название запроса:</label>
@@ -304,20 +927,55 @@
         </div>
         <div class="container">
             <h1>Kuber Code REST API Documentation</h1>
-            <div>
-                <button onclick="openPopup()" class="add-btn">
-                    Добавить запрос
+            <div class="controls-container">
+                <button class="export-btn" onclick="exportRequests()">
+                    📥 Экспорт запросов
                 </button>
-                <button onclick="clearAllRequests()" class="clear-all-btn">
-                    Очистить все
+                <button
+                    class="import-btn"
+                    onclick="document.getElementById('importFile').click()"
+                >
+                    📤 Импорт запросов
                 </button>
+                <input
+                    type="file"
+                    id="importFile"
+                    accept=".json"
+                    style="display: none"
+                    onchange="importRequests(event)"
+                />
             </div>
+        </div>
+        <div class="actions-container">
+            <button onclick="openPopup()" class="add-btn">
+                Добавить запрос
+            </button>
+            <button onclick="clearAllRequests()" class="clear-all-btn">
+                Очистить все
+            </button>
         </div>
 
         <script>
             const API_URL = "http://localhost:8080";
 
             function openPopup() {
+                // Очищаем форму
+                document.getElementById("newRequestForm").reset();
+
+                // Очищаем поля редакторов
+                document.getElementById("requestFields").innerHTML = "";
+                document.getElementById("responseFields").innerHTML = "";
+
+                // Удаляем атрибут редактирования, если он был
+                document
+                    .getElementById("newRequestForm")
+                    .removeAttribute("data-editing-request");
+
+                // Добавляем по одному пустому полю для запроса и ответа
+                const requestEditor = addRequestField();
+                const responseEditor = addResponseField();
+
+                // Показываем попап
                 document.getElementById("overlay").style.display = "block";
                 document.getElementById("popup").style.display = "block";
             }
@@ -329,37 +987,138 @@
 
             function addRequestField() {
                 const div = document.createElement("div");
-                div.className = "input-group";
+                div.className = "json-editor-container";
                 div.innerHTML = `
-                    <input type="text" placeholder="Название поля" required>
-                    <select>
-                        <option value="string">String</option>
-                        <option value="number">Number</option>
-                        <option value="boolean">Boolean</option>
-                    </select>
-                    <input type="text" placeholder="Пример значения" class="example-value">
-                    <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
+                    <div class="editor-header">
+                        <span>JSON Editor</span>
+                        <div class="editor-controls">
+                            <button type="button" class="format-btn" onclick="formatJSON(this)">
+                                Format JSON
+                            </button>
+                            <button type="button" class="validate-btn" onclick="validateJSON(this)">
+                                Validate
+                            </button>
+                            <button type="button" class="delete-field-btn" onclick="deleteField(this)">
+                                ✕ Удалить
+                            </button>
+                        </div>
+                    </div>
+                    <textarea class="json-editor"></textarea>
+                    <div class="editor-status"></div>
                 `;
+
                 document.getElementById("requestFields").appendChild(div);
+
+                // Инициализируем CodeMirror
+                const editor = CodeMirror.fromTextArea(
+                    div.querySelector(".json-editor"),
+                    {
+                        mode: { name: "javascript", json: true },
+                        theme: "dracula",
+                        lineNumbers: true,
+                        matchBrackets: true,
+                        autoCloseBrackets: true,
+                        indentUnit: 4,
+                        tabSize: 4,
+                        lineWrapping: true,
+                        foldGutter: true,
+                        gutters: [
+                            "CodeMirror-linenumbers",
+                            "CodeMirror-foldgutter",
+                        ],
+                        extraKeys: {
+                            "Ctrl-Q": function (cm) {
+                                cm.foldCode(cm.getCursor());
+                            },
+                            "Ctrl-Space": "autocomplete",
+                        },
+                    }
+                );
+
+                // Устанавливаем пример JSON
+                editor.setValue(
+                    JSON.stringify(
+                        {
+                            id: "",
+                            status: "",
+                            message: "",
+                            data: {
+                                username: "",
+                                email: "",
+                                age: 0,
+                                createdAt: "",
+                            },
+                        },
+                        null,
+                        4
+                    )
+                );
+
+                return editor;
             }
 
             function addResponseField() {
                 const div = document.createElement("div");
-                div.className = "input-group";
+                div.className = "json-editor-container";
                 div.innerHTML = `
-                    <input type="text" placeholder="Название поля" required>
-                    <select>
-                        <option value="string">String</option>
-                        <option value="number">Number</option>
-                        <option value="boolean">Boolean</option>
-                    </select>
-                    <input type="text" placeholder="Пример значения" class="example-value">
-                    <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
+                    <div class="editor-header">
+                        <span>JSON Editor</span>
+                        <div class="editor-controls">
+                            <button type="button" class="format-btn" onclick="formatJSON(this)">
+                                Format JSON
+                            </button>
+                            <button type="button" class="validate-btn" onclick="validateJSON(this)">
+                                Validate
+                            </button>
+                            <button type="button" class="delete-field-btn" onclick="deleteField(this)">
+                                ✕ Удалить
+                            </button>
+                        </div>
+                    </div>
+                    <textarea class="json-editor"></textarea>
+                    <div class="editor-status"></div>
                 `;
                 document.getElementById("responseFields").appendChild(div);
+
+                const editor = CodeMirror.fromTextArea(
+                    div.querySelector(".json-editor"),
+                    {
+                        mode: { name: "javascript", json: true },
+                        theme: "dracula",
+                        lineNumbers: true,
+                        matchBrackets: true,
+                        autoCloseBrackets: true,
+                        indentUnit: 4,
+                        tabSize: 4,
+                        lineWrapping: true,
+                        foldGutter: true,
+                        gutters: [
+                            "CodeMirror-linenumbers",
+                            "CodeMirror-foldgutter",
+                        ],
+                        extraKeys: {
+                            "Ctrl-Q": function (cm) {
+                                cm.foldCode(cm.getCursor());
+                            },
+                            "Ctrl-Space": "autocomplete",
+                        },
+                    }
+                );
+
+                return editor;
+            }
+
+            // Функция удаления поля
+            function deleteField(button) {
+                const container = button.closest(".json-editor-container");
+                container.style.animation = "fadeOut 0.3s ease forwards";
+                setTimeout(() => {
+                    container.remove();
+                }, 300);
             }
 
             function loadSavedRequests() {
+                initializeDefaultRequests(); // Инициализируем тестовый запрос при первом посещении
                 const savedRequests = JSON.parse(
                     localStorage.getItem("requests") || "[]"
                 );
@@ -396,68 +1155,62 @@
                     <div id="${requestData.name.toLowerCase()}-notification" class="notification"></div>
                     <form data-endpoint="${requestData.url}">
                         ${requestData.requestFields
-                            .map(
-                                (field) => `
-                            <div class="input-group">
-                                <label>${field.name}:</label>
-                                <input type="${
-                                    field.type === "number" ? "number" : "text"
-                                }" 
-                                       name="${field.name}" 
-                                       required>
-                            </div>
-                        `
-                            )
+                            .map((field) => {
+                                try {
+                                    const jsonData = JSON.parse(field.jsonData);
+                                    return Object.entries(jsonData)
+                                        .map(
+                                            ([key, value]) => `
+                                    <div class="input-group">
+                                        <label>${key}:</label>
+                                        <input type="${
+                                            typeof value === "number"
+                                                ? "number"
+                                                : "text"
+                                        }" 
+                                               name="${key}" 
+                                               value="${value}"
+                                               required>
+                                    </div>
+                                `
+                                        )
+                                        .join("");
+                                } catch (e) {
+                                    console.error(
+                                        "Error parsing request JSON:",
+                                        e
+                                    );
+                                    return "";
+                                }
+                            })
                             .join("")}
                         <button type="submit" class="submit-btn">Отправить</button>
                     </form>
                     <pre class="request-body">
 Тело запроса:
-{
-    ${requestData.requestFields
-        .map((field) => {
-            let defaultValue;
-            if (field.example) {
-                defaultValue =
-                    field.type === "number"
-                        ? field.example
-                        : `"${field.example}"`;
-            } else {
-                defaultValue =
-                    field.type === "string"
-                        ? '"value"'
-                        : field.type === "number"
-                        ? "0"
-                        : "false";
-            }
-            return `"${field.name}": ${defaultValue}`;
-        })
-        .join(",\n    ")}
-}
+${requestData.requestFields
+    .map((field) => {
+        try {
+            return JSON.stringify(JSON.parse(field.jsonData), null, 4);
+        } catch (e) {
+            console.error("Error formatting request JSON:", e);
+            return "{}";
+        }
+    })
+    .join("\n")}
                     </pre>
                     <pre class="response-body">
 Ответ:
-{
-    ${requestData.responseFields
-        .map((field) => {
-            let defaultValue;
-            if (field.example) {
-                defaultValue =
-                    field.type === "number"
-                        ? field.example
-                        : `"${field.example}"`;
-            } else {
-                defaultValue =
-                    field.type === "string"
-                        ? '"value"'
-                        : field.type === "number"
-                        ? "0"
-                        : "false";
-            }
-            return `"${field.name}": ${defaultValue}`;
-        })
-        .join(",\n    ")}
-}
+${requestData.responseFields
+    .map((field) => {
+        try {
+            return JSON.stringify(JSON.parse(field.jsonData), null, 4);
+        } catch (e) {
+            console.error("Error formatting response JSON:", e);
+            return "{}";
+        }
+    })
+    .join("\n")}
                     </pre>
                 `;
                 document.body.appendChild(endpoint);
@@ -467,36 +1220,84 @@
             document.getElementById("newRequestForm").onsubmit = function (e) {
                 e.preventDefault();
 
+                // Проверяем наличие и валидность JSON в полях запроса
+                const requestFields = Array.from(
+                    document.getElementById("requestFields").children
+                );
+                let hasValidJSON = false;
+
+                for (const container of requestFields) {
+                    const editor =
+                        container.querySelector(".CodeMirror").CodeMirror;
+                    const jsonValue = editor.getValue().trim();
+                    const statusDiv = container.querySelector(".editor-status");
+
+                    try {
+                        if (jsonValue === "" || jsonValue === "{}") {
+                            statusDiv.textContent = "JSON не может быть пустым";
+                            statusDiv.className = "editor-status error";
+                            editor.focus();
+                            return false;
+                        }
+
+                        JSON.parse(jsonValue);
+                        hasValidJSON = true;
+                    } catch (e) {
+                        statusDiv.textContent = "Ошибка: Неверный формат JSON";
+                        statusDiv.className = "editor-status error";
+                        editor.focus();
+                        return false;
+                    }
+                }
+
+                if (!hasValidJSON) {
+                    alert("Добавьте хотя бы одно поле в тело запроса");
+                    return false;
+                }
+
                 const requestData = {
                     name: document.getElementById("requestName").value,
                     method: document.getElementById("requestMethod").value,
                     url: document.getElementById("requestUrl").value,
-                    requestFields: Array.from(
-                        document.getElementById("requestFields").children
-                    ).map((field) => ({
-                        name: field.querySelector("input").value,
-                        type: field.querySelector("select").value,
-                        example: field.querySelector(".example-value").value,
+                    requestFields: requestFields.map((container) => ({
+                        jsonData: container
+                            .querySelector(".CodeMirror")
+                            .CodeMirror.getValue(),
                     })),
                     responseFields: Array.from(
                         document.getElementById("responseFields").children
-                    ).map((field) => ({
-                        name: field.querySelector("input").value,
-                        type: field.querySelector("select").value,
-                        example: field.querySelector(".example-value").value,
+                    ).map((container) => ({
+                        jsonData: container
+                            .querySelector(".CodeMirror")
+                            .CodeMirror.getValue(),
                     })),
                 };
 
+                // Сохраняем в localStorage
                 const savedRequests = JSON.parse(
                     localStorage.getItem("requests") || "[]"
                 );
-                savedRequests.push(requestData);
+
+                if (this.dataset.editingRequest) {
+                    // Режим редактирования
+                    const index = savedRequests.findIndex(
+                        (req) => req.name === this.dataset.editingRequest
+                    );
+                    if (index !== -1) {
+                        savedRequests[index] = requestData;
+                    }
+                } else {
+                    // Режим создания
+                    savedRequests.push(requestData);
+                }
+
                 localStorage.setItem("requests", JSON.stringify(savedRequests));
 
-                createEndpointElement(requestData);
+                // Обновляем отображение
+                location.reload();
 
+                // Закрываем форму
                 closePopup();
-                this.reset();
             };
 
             document.addEventListener("DOMContentLoaded", loadSavedRequests);
@@ -658,167 +1459,143 @@
                 );
 
                 if (request) {
-                    // Заполняем форму данными запроса
-                    document.getElementById("requestName").value = request.name;
-                    document.getElementById("requestMethod").value =
-                        request.method;
-                    document.getElementById("requestUrl").value = request.url;
-
-                    // Очищаем и заполняем поля запроса
-                    document.getElementById("requestFields").innerHTML = "";
-                    request.requestFields.forEach((field) => {
-                        const div = document.createElement("div");
-                        div.className = "input-group";
-                        div.innerHTML = `
-                            <input type="text" placeholder="Название поля" value="${
-                                field.name
-                            }" required>
-                            <select>
-                                <option value="string" ${
-                                    field.type === "string" ? "selected" : ""
-                                }>String</option>
-                                <option value="number" ${
-                                    field.type === "number" ? "selected" : ""
-                                }>Number</option>
-                                <option value="boolean" ${
-                                    field.type === "boolean" ? "selected" : ""
-                                }>Boolean</option>
-                            </select>
-                            <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
-                        `;
-                        document
-                            .getElementById("requestFields")
-                            .appendChild(div);
-                    });
-
-                    // Аналогично для полей ответа
-                    document.getElementById("responseFields").innerHTML = "";
-                    request.responseFields.forEach((field) => {
-                        const div = document.createElement("div");
-                        div.className = "input-group";
-                        div.innerHTML = `
-                            <input type="text" placeholder="Название поля" value="${
-                                field.name
-                            }" required>
-                            <select>
-                                <option value="string" ${
-                                    field.type === "string" ? "selected" : ""
-                                }>String</option>
-                                <option value="number" ${
-                                    field.type === "number" ? "selected" : ""
-                                }>Number</option>
-                                <option value="boolean" ${
-                                    field.type === "boolean" ? "selected" : ""
-                                }>Boolean</option>
-                            </select>
-                            <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
-                        `;
-                        document
-                            .getElementById("responseFields")
-                            .appendChild(div);
-                    });
-
-                    // Открываем попап
+                    // Сначала открываем попап
                     openPopup();
 
-                    // Обновляем обработчик отправки формы для режима редактирования
-                    const form = document.getElementById("newRequestForm");
-                    form.onsubmit = function (e) {
-                        e.preventDefault();
-
-                        const requestData = {
-                            name: document.getElementById("requestName").value,
-                            method: document.getElementById("requestMethod")
-                                .value,
-                            url: document.getElementById("requestUrl").value,
-                            requestFields: Array.from(
-                                document.getElementById("requestFields")
-                                    .children
-                            ).map((field) => ({
-                                name: field.querySelector("input").value,
-                                type: field.querySelector("select").value,
-                            })),
-                            responseFields: Array.from(
-                                document.getElementById("responseFields")
-                                    .children
-                            ).map((field) => ({
-                                name: field.querySelector("input").value,
-                                type: field.querySelector("select").value,
-                            })),
-                        };
-
-                        // Обновляем localStorage
-                        const savedRequests = JSON.parse(
-                            localStorage.getItem("requests") || "[]"
-                        );
-                        const updatedRequests = savedRequests.filter(
-                            (req) => req.name !== requestName
-                        );
-                        updatedRequests.push(requestData);
-                        localStorage.setItem(
-                            "requests",
-                            JSON.stringify(updatedRequests)
-                        );
-
-                        // Обновляем DOM сразу
-                        const endpoints =
-                            document.querySelectorAll(".endpoint");
-                        const oldEndpoint = Array.from(endpoints).find(
-                            (endpoint) => {
-                                const h2 = endpoint.querySelector("h2");
-                                return h2 && h2.textContent === requestName;
-                            }
-                        );
-
-                        if (oldEndpoint) {
-                            // Анимируем удаление старого элемента
-                            oldEndpoint.style.animation =
-                                "fadeOut 0.3s ease-out";
-                            setTimeout(() => {
-                                oldEndpoint.remove();
-                                // Создаем новый элемент с анимацией появления
-                                const newEndpoint =
-                                    createEndpointElement(requestData);
-                                newEndpoint.style.animation =
-                                    "slideIn 0.3s ease-out";
-                            }, 300);
+                    // Добавляем небольшую задержку, чтобы DOM успел обновиться
+                    setTimeout(() => {
+                        // Меняем заголовок
+                        const popupHeader =
+                            document.querySelector(".popup-header h2");
+                        if (popupHeader) {
+                            popupHeader.textContent = "Редактировать запрос";
                         }
 
-                        // Закрываем попап
-                        document.getElementById("overlay").style.display =
-                            "none";
-                        document.getElementById("popup").style.display = "none";
+                        // Очищаем форму перед заполнением
+                        document.getElementById("newRequestForm").reset();
+                        document.getElementById("requestFields").innerHTML = "";
+                        document.getElementById("responseFields").innerHTML =
+                            "";
 
-                        // Сбрасываем форму
-                        this.reset();
+                        // Заполняем основные поля
+                        document.getElementById("requestName").value =
+                            request.name;
+                        document.getElementById("requestMethod").value =
+                            request.method;
+                        document.getElementById("requestUrl").value =
+                            request.url;
 
-                        // Показываем уведомление
-                        const notification = document.createElement("div");
-                        notification.style.cssText = `
-                            position: fixed;
-                            top: 20px;
-                            right: 20px;
-                            background: #49cc90;
-                            color: white;
-                            padding: 15px;
-                            border-radius: 4px;
-                            animation: slideIn 0.5s ease-out;
-                            z-index: 1001;
-                        `;
-                        notification.textContent = `Запрос "${requestData.name}" успешно отредактирован!`;
-                        document.body.appendChild(notification);
+                        // Добавляем поля запроса
+                        request.requestFields.forEach((field) => {
+                            const editor = addRequestField();
+                            try {
+                                const formatted = JSON.stringify(
+                                    JSON.parse(field.jsonData),
+                                    null,
+                                    4
+                                );
+                                editor.setValue(formatted);
+                            } catch (e) {
+                                console.error(
+                                    "Error formatting request JSON:",
+                                    e
+                                );
+                                editor.setValue(field.jsonData || "{}");
+                            }
+                        });
 
-                        setTimeout(() => {
-                            notification.style.animation =
-                                "fadeOut 0.5s ease-out";
-                            setTimeout(() => notification.remove(), 500);
-                        }, 3000);
+                        // Если нет полей запроса, добавляем пустое поле
+                        if (
+                            !request.requestFields ||
+                            request.requestFields.length === 0
+                        ) {
+                            const editor = addRequestField();
+                            editor.setValue("{}");
+                        }
 
-                        // Восстанавливаем стандартный обработчик отправки формы
-                        this.onsubmit = window.originalFormSubmit;
+                        // Добавляем поля ответа
+                        request.responseFields.forEach((field) => {
+                            const editor = addResponseField();
+                            try {
+                                const formatted = JSON.stringify(
+                                    JSON.parse(field.jsonData),
+                                    null,
+                                    4
+                                );
+                                editor.setValue(formatted);
+                            } catch (e) {
+                                console.error(
+                                    "Error formatting response JSON:",
+                                    e
+                                );
+                                editor.setValue(field.jsonData || "{}");
+                            }
+                        });
 
-                        return false;
-                    };
+                        // Если нет полей ответа, добавляем пустое поле
+                        if (
+                            !request.responseFields ||
+                            request.responseFields.length === 0
+                        ) {
+                            const editor = addResponseField();
+                            editor.setValue("{}");
+                        }
+
+                        // Добавляем ID редактируемого запроса в форму
+                        const form = document.getElementById("newRequestForm");
+                        form.dataset.editingRequest = requestName;
+
+                        // Обновляем обработчик отправки формы
+                        form.onsubmit = function (e) {
+                            e.preventDefault();
+
+                            const updatedRequest = {
+                                name: document.getElementById("requestName")
+                                    .value,
+                                method: document.getElementById("requestMethod")
+                                    .value,
+                                url: document.getElementById("requestUrl")
+                                    .value,
+                                requestFields: Array.from(
+                                    document.getElementById("requestFields")
+                                        .children
+                                ).map((container) => ({
+                                    jsonData: container
+                                        .querySelector(".CodeMirror")
+                                        .CodeMirror.getValue(),
+                                })),
+                                responseFields: Array.from(
+                                    document.getElementById("responseFields")
+                                        .children
+                                ).map((container) => ({
+                                    jsonData: container
+                                        .querySelector(".CodeMirror")
+                                        .CodeMirror.getValue(),
+                                })),
+                            };
+
+                            // Обновляем запрос в localStorage
+                            const requests = JSON.parse(
+                                localStorage.getItem("requests") || "[]"
+                            );
+                            const index = requests.findIndex(
+                                (req) => req.name === requestName
+                            );
+                            if (index !== -1) {
+                                requests[index] = updatedRequest;
+                                localStorage.setItem(
+                                    "requests",
+                                    JSON.stringify(requests)
+                                );
+
+                                // Обновляем отображение
+                                location.reload();
+                            }
+
+                            // Закрываем форму
+                            closePopup();
+                        };
+                    }, 100); // Небольшая задержка для обновления DOM
                 }
             }
 
@@ -842,36 +1619,6 @@
                     }
                 `;
                 document.head.appendChild(style);
-            }
-
-            // Добавим кнопки в header
-            function addExportImportButtons() {
-                const container = document.querySelector(".container div");
-
-                // Добавляем кнопку экспорта
-                const exportBtn = document.createElement("button");
-                exportBtn.className = "export-btn";
-                exportBtn.onclick = exportRequests;
-                exportBtn.innerHTML = "📥 Экспорт запросов";
-
-                // Добавляем кнопку импорта
-                const importBtn = document.createElement("button");
-                importBtn.className = "import-btn";
-                importBtn.onclick = () =>
-                    document.getElementById("importFile").click();
-                importBtn.innerHTML = "📤 Импорт запросов";
-
-                // Добавляем скрытый input для загрузки файла
-                const importInput = document.createElement("input");
-                importInput.type = "file";
-                importInput.id = "importFile";
-                importInput.accept = ".json";
-                importInput.style.display = "none";
-                importInput.onchange = importRequests;
-
-                container.insertBefore(exportBtn, container.lastElementChild);
-                container.insertBefore(importBtn, container.lastElementChild);
-                container.appendChild(importInput);
             }
 
             // Функция экспорта запросов
@@ -1042,79 +1789,116 @@
             `;
             document.head.appendChild(style);
 
-            // Вызываем функцию добавления кнопок при загрузке страницы
-            document.addEventListener(
-                "DOMContentLoaded",
-                addExportImportButtons
-            );
-        </script>
+            // Функция инициализации начальных данных
+            function initializeDefaultRequests() {
+                const isFirstVisit = !localStorage.getItem("hasVisited");
 
-        <div class="endpoint">
-            <div
-                style="
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                "
-            >
-                <h2>Тестовый запрос</h2>
-                <div class="endpoint-controls">
-                    <button
-                        onclick="editRequest('Тестовый запрос')"
-                        class="control-btn edit-btn"
-                    >
-                        ✎ Изменить
-                    </button>
-                    <button
-                        onclick="deleteRequest('Тестовый запрос')"
-                        class="control-btn delete-btn"
-                    >
-                        ✕ Удалить
-                    </button>
-                </div>
-            </div>
-            <div>
-                <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/api/test</span>
-            </div>
-            <div id="test-notification" class="notification"></div>
-            <form data-endpoint="/api/test">
-                <div class="input-group">
-                    <label>username:</label>
-                    <input type="text" name="username" required />
-                </div>
-                <div class="input-group">
-                    <label>email:</label>
-                    <input type="email" name="email" required />
-                </div>
-                <div class="input-group">
-                    <label>age:</label>
-                    <input type="number" name="age" required />
-                </div>
-                <button type="submit" class="submit-btn">Отправить</button>
-            </form>
-            <pre class="request-body">
-Тело запроса:
-{
-    "username": "john_doe",
-    "email": "john@example.com",
-    "age": 25
-}</pre
-            >
-            <pre class="response-body">
-Ответ:
-{
-    "id": "12345",
-    "status": "success",
-    "message": "User created successfully",
-    "data": {
-        "username": "john_doe",
-        "email": "john@example.com",
-        "age": 25,
-        "createdAt": "2024-01-01T12:00:00Z"
-    }
-}</pre
-            >
-        </div>
+                if (isFirstVisit) {
+                    const defaultRequest = {
+                        name: "Тестовый запрос",
+                        method: "POST",
+                        url: "http://localhost:8080/api/test",
+                        requestFields: [
+                            {
+                                jsonData: JSON.stringify(
+                                    {
+                                        username: "john_doe",
+                                        email: "john@example.com",
+                                        age: 25,
+                                    },
+                                    null,
+                                    4
+                                ),
+                            },
+                        ],
+                        responseFields: [
+                            {
+                                jsonData: JSON.stringify(
+                                    {
+                                        id: "12345",
+                                        status: "success",
+                                        message: "User created successfully",
+                                        data: {
+                                            username: "john_doe",
+                                            email: "john@example.com",
+                                            age: 25,
+                                            createdAt: "2024-01-01T12:00:00Z",
+                                        },
+                                    },
+                                    null,
+                                    4
+                                ),
+                            },
+                        ],
+                    };
+
+                    localStorage.setItem(
+                        "requests",
+                        JSON.stringify([defaultRequest])
+                    );
+                    localStorage.setItem("hasVisited", "true");
+                }
+            }
+
+            // Функция форматирования JSON
+            function formatJSON(button) {
+                const container = button.closest(".json-editor-container");
+                const editor =
+                    container.querySelector(".CodeMirror").CodeMirror;
+                const statusDiv = container.querySelector(".editor-status");
+
+                try {
+                    const json = editor.getValue();
+                    const parsed = JSON.parse(json);
+                    const formatted = JSON.stringify(parsed, null, 4);
+                    editor.setValue(formatted);
+
+                    // Показываем уведомление об успехе
+                    statusDiv.textContent = "JSON отформатирован";
+                    statusDiv.className = "editor-status success";
+                    setTimeout(() => {
+                        statusDiv.textContent = "";
+                        statusDiv.className = "editor-status";
+                    }, 2000);
+                } catch (e) {
+                    // Показываем ошибку
+                    statusDiv.textContent = "Ошибка: Неверный JSON";
+                    statusDiv.className = "editor-status error";
+                    setTimeout(() => {
+                        statusDiv.textContent = "";
+                        statusDiv.className = "editor-status";
+                    }, 3000);
+                }
+            }
+
+            // Функция валидации JSON
+            function validateJSON(button) {
+                const container = button.closest(".json-editor-container");
+                const editor =
+                    container.querySelector(".CodeMirror").CodeMirror;
+                const statusDiv = container.querySelector(".editor-status");
+
+                try {
+                    const json = editor.getValue();
+                    JSON.parse(json);
+
+                    // Показываем уведомление об успехе
+                    statusDiv.textContent = "JSON валиден";
+                    statusDiv.className = "editor-status success";
+                    setTimeout(() => {
+                        statusDiv.textContent = "";
+                        statusDiv.className = "editor-status";
+                    }, 2000);
+                } catch (e) {
+                    // Показываем ошибку
+                    statusDiv.textContent = `Ошибка: ${e.message}`;
+                    statusDiv.className = "editor-status error";
+                    setTimeout(() => {
+                        statusDiv.textContent = "";
+                        statusDiv.className = "editor-status";
+                    }, 3000);
+                }
+            }
+        </script>
     </body>
 </html>
