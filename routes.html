@@ -62,198 +62,1057 @@
                 color: #3b4151;
                 font-size: 1.2em;
             }
+            .input-group {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                margin: 10px 0;
+            }
+            .input-group input,
+            .input-group select {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .input-group input[type="text"] {
+                flex: 1;
+            }
+            .input-group select {
+                width: 100px;
+            }
+            .example-value {
+                width: 150px !important;
+            }
+            .remove-field-btn {
+                background: #f93e3e;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .submit-btn {
+                background: #49cc90;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .notification {
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+                display: none;
+            }
+            .success {
+                background: #49cc90;
+                color: white;
+            }
+            .error {
+                background: #f93e3e;
+                color: white;
+            }
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .add-btn {
+                background: #49cc90;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                width: 80%;
+                max-width: 600px;
+            }
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+            .field-group {
+                margin: 10px 0;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .add-field-btn {
+                background: #61affe;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 5px 0;
+            }
+            .endpoint-controls {
+                float: right;
+            }
+            .control-btn {
+                padding: 5px 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-left: 5px;
+            }
+            .edit-btn {
+                background: #fca130;
+                color: white;
+            }
+            .delete-btn {
+                background: #f93e3e;
+                color: white;
+            }
+            .clear-all-btn {
+                background: #e83e8c;
+                color: white;
+                margin-left: 10px;
+            }
+            .request-body,
+            .response-body {
+                background: #263238;
+                color: #fff;
+                padding: 15px;
+                border-radius: 4px;
+                overflow-x: auto;
+                margin: 10px 0;
+            }
+            .request-body {
+                background: #32424a; /* Немного светлее для отличия */
+                border-left: 4px solid #61affe; /* Синяя полоса для запроса */
+            }
+            .response-body {
+                border-left: 4px solid #49cc90; /* Зеленая полоса для ответа */
+            }
+            pre {
+                margin: 0;
+                line-height: 1.5;
+            }
+            .export-btn,
+            .import-btn {
+                background: #61affe;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-right: 10px;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .export-btn:hover,
+            .import-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .export-btn:active,
+            .import-btn:active {
+                transform: translateY(0);
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
         </style>
     </head>
     <body>
-        <h1>Kuber Code REST API Documentation</h1>
+        <div class="popup-overlay" id="overlay"></div>
+        <div class="popup" id="popup">
+            <h2>Создать новый запрос</h2>
+            <form id="newRequestForm">
+                <div class="input-group">
+                    <label>Название запроса:</label>
+                    <input type="text" id="requestName" required />
+                </div>
+                <div class="input-group">
+                    <label>Тип запроса:</label>
+                    <select id="requestMethod" required>
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>URL эндпоинта:</label>
+                    <input type="text" id="requestUrl" required />
+                </div>
+
+                <div class="field-group">
+                    <h3>Поля тела запроса</h3>
+                    <div id="requestFields"></div>
+                    <button
+                        type="button"
+                        class="add-field-btn"
+                        onclick="addRequestField()"
+                    >
+                        Добавить поле
+                    </button>
+                </div>
+
+                <div class="field-group">
+                    <h3>Поля ответа</h3>
+                    <div id="responseFields"></div>
+                    <button
+                        type="button"
+                        class="add-field-btn"
+                        onclick="addResponseField()"
+                    >
+                        Добавить поле
+                    </button>
+                </div>
+
+                <button type="submit" class="submit-btn">Сохранить</button>
+                <button
+                    type="button"
+                    class="submit-btn"
+                    style="background: #f93e3e"
+                    onclick="closePopup()"
+                >
+                    Отмена
+                </button>
+            </form>
+        </div>
+        <div class="container">
+            <h1>Kuber Code REST API Documentation</h1>
+            <div>
+                <button onclick="openPopup()" class="add-btn">
+                    Добавить запрос
+                </button>
+                <button onclick="clearAllRequests()" class="clear-all-btn">
+                    Очистить все
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const API_URL = "http://localhost:8080";
+
+            function openPopup() {
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("popup").style.display = "block";
+            }
+
+            function closePopup() {
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("popup").style.display = "none";
+            }
+
+            function addRequestField() {
+                const div = document.createElement("div");
+                div.className = "input-group";
+                div.innerHTML = `
+                    <input type="text" placeholder="Название поля" required>
+                    <select>
+                        <option value="string">String</option>
+                        <option value="number">Number</option>
+                        <option value="boolean">Boolean</option>
+                    </select>
+                    <input type="text" placeholder="Пример значения" class="example-value">
+                    <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
+                `;
+                document.getElementById("requestFields").appendChild(div);
+            }
+
+            function addResponseField() {
+                const div = document.createElement("div");
+                div.className = "input-group";
+                div.innerHTML = `
+                    <input type="text" placeholder="Название поля" required>
+                    <select>
+                        <option value="string">String</option>
+                        <option value="number">Number</option>
+                        <option value="boolean">Boolean</option>
+                    </select>
+                    <input type="text" placeholder="Пример значения" class="example-value">
+                    <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
+                `;
+                document.getElementById("responseFields").appendChild(div);
+            }
+
+            function loadSavedRequests() {
+                const savedRequests = JSON.parse(
+                    localStorage.getItem("requests") || "[]"
+                );
+                savedRequests.forEach((request) => {
+                    createEndpointElement(request);
+                });
+            }
+
+            function createEndpointElement(requestData) {
+                const endpoint = document.createElement("div");
+                endpoint.className = "endpoint";
+                endpoint.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>${requestData.name}</h2>
+                        <div class="endpoint-controls">
+                            <button onclick="editRequest('${
+                                requestData.name
+                            }')" class="control-btn edit-btn">
+                                ✎ Изменить
+                            </button>
+                            <button onclick="deleteRequest('${
+                                requestData.name
+                            }')" class="control-btn delete-btn">
+                                ✕ Удалить
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="method ${requestData.method.toLowerCase()}">${
+                    requestData.method
+                }</span>
+                        <span class="url">${requestData.url}</span>
+                    </div>
+                    <div id="${requestData.name.toLowerCase()}-notification" class="notification"></div>
+                    <form data-endpoint="${requestData.url}">
+                        ${requestData.requestFields
+                            .map(
+                                (field) => `
+                            <div class="input-group">
+                                <label>${field.name}:</label>
+                                <input type="${
+                                    field.type === "number" ? "number" : "text"
+                                }" 
+                                       name="${field.name}" 
+                                       required>
+                            </div>
+                        `
+                            )
+                            .join("")}
+                        <button type="submit" class="submit-btn">Отправить</button>
+                    </form>
+                    <pre class="request-body">
+Тело запроса:
+{
+    ${requestData.requestFields
+        .map((field) => {
+            let defaultValue;
+            if (field.example) {
+                defaultValue =
+                    field.type === "number"
+                        ? field.example
+                        : `"${field.example}"`;
+            } else {
+                defaultValue =
+                    field.type === "string"
+                        ? '"value"'
+                        : field.type === "number"
+                        ? "0"
+                        : "false";
+            }
+            return `"${field.name}": ${defaultValue}`;
+        })
+        .join(",\n    ")}
+}
+                    </pre>
+                    <pre class="response-body">
+Ответ:
+{
+    ${requestData.responseFields
+        .map((field) => {
+            let defaultValue;
+            if (field.example) {
+                defaultValue =
+                    field.type === "number"
+                        ? field.example
+                        : `"${field.example}"`;
+            } else {
+                defaultValue =
+                    field.type === "string"
+                        ? '"value"'
+                        : field.type === "number"
+                        ? "0"
+                        : "false";
+            }
+            return `"${field.name}": ${defaultValue}`;
+        })
+        .join(",\n    ")}
+}
+                    </pre>
+                `;
+                document.body.appendChild(endpoint);
+                return endpoint;
+            }
+
+            document.getElementById("newRequestForm").onsubmit = function (e) {
+                e.preventDefault();
+
+                const requestData = {
+                    name: document.getElementById("requestName").value,
+                    method: document.getElementById("requestMethod").value,
+                    url: document.getElementById("requestUrl").value,
+                    requestFields: Array.from(
+                        document.getElementById("requestFields").children
+                    ).map((field) => ({
+                        name: field.querySelector("input").value,
+                        type: field.querySelector("select").value,
+                        example: field.querySelector(".example-value").value,
+                    })),
+                    responseFields: Array.from(
+                        document.getElementById("responseFields").children
+                    ).map((field) => ({
+                        name: field.querySelector("input").value,
+                        type: field.querySelector("select").value,
+                        example: field.querySelector(".example-value").value,
+                    })),
+                };
+
+                const savedRequests = JSON.parse(
+                    localStorage.getItem("requests") || "[]"
+                );
+                savedRequests.push(requestData);
+                localStorage.setItem("requests", JSON.stringify(savedRequests));
+
+                createEndpointElement(requestData);
+
+                closePopup();
+                this.reset();
+            };
+
+            document.addEventListener("DOMContentLoaded", loadSavedRequests);
+
+            async function sendRequest(
+                endpoint,
+                method,
+                data = null,
+                token = null,
+                notificationId
+            ) {
+                try {
+                    const headers = {
+                        "Content-Type": "application/json",
+                    };
+
+                    if (token) {
+                        headers["Authorization"] = `Bearer ${token}`;
+                    }
+
+                    const options = {
+                        method,
+                        headers,
+                        body: data ? JSON.stringify(data) : null,
+                    };
+
+                    const response = await fetch(
+                        `${API_URL}${endpoint}`,
+                        options
+                    );
+                    const result = await response.json();
+
+                    const notification =
+                        document.getElementById(notificationId);
+                    notification.style.display = "block";
+
+                    if (response.ok) {
+                        notification.className = "notification success";
+                        notification.textContent = "Запрос успешно выполнен!";
+
+                        // Очищаем поля формы
+                        const form = document.querySelector(
+                            `form[data-endpoint="${endpoint}"]`
+                        );
+                        if (form) form.reset();
+                    } else {
+                        notification.className = "notification error";
+                        notification.textContent = `Ошибка: ${
+                            result.message || "Что-то пошло не так"
+                        }`;
+                    }
+
+                    return result;
+                } catch (error) {
+                    const notification =
+                        document.getElementById(notificationId);
+                    notification.style.display = "block";
+                    notification.className = "notification error";
+                    notification.textContent = `Ошибка: ${error.message}`;
+                }
+            }
+
+            function clearAllRequests() {
+                if (confirm("Вы уверены, что хотите удалить все запросы?")) {
+                    localStorage.removeItem("requests");
+                    // Находим и удаляем все элементы endpoint, кроме стандартных (login и register)
+                    const endpoints = document.querySelectorAll(".endpoint");
+                    endpoints.forEach((endpoint) => {
+                        if (
+                            !endpoint.querySelector(
+                                'form[data-endpoint="/login"]'
+                            ) &&
+                            !endpoint.querySelector(
+                                'form[data-endpoint="/register"]'
+                            )
+                        ) {
+                            endpoint.remove();
+                        }
+                    });
+
+                    // Добавим анимированное уведомление
+                    const notification = document.createElement("div");
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #e83e8c;
+                        color: white;
+                        padding: 15px;
+                        border-radius: 4px;
+                        animation: slideIn 0.5s ease-out;
+                    `;
+                    notification.textContent =
+                        "Все пользовательские запросы удалены!";
+                    document.body.appendChild(notification);
+
+                    setTimeout(() => notification.remove(), 3000);
+                }
+            }
+
+            function deleteRequest(requestName) {
+                if (confirm(`Удалить запрос "${requestName}"?`)) {
+                    // Удаляем из localStorage
+                    const savedRequests = JSON.parse(
+                        localStorage.getItem("requests") || "[]"
+                    );
+                    const updatedRequests = savedRequests.filter(
+                        (req) => req.name !== requestName
+                    );
+                    localStorage.setItem(
+                        "requests",
+                        JSON.stringify(updatedRequests)
+                    );
+
+                    // Находим и удаляем элемент из DOM сразу
+                    const endpoints = document.querySelectorAll(".endpoint");
+                    const endpointToDelete = Array.from(endpoints).find(
+                        (endpoint) => {
+                            const h2 = endpoint.querySelector("h2");
+                            return h2 && h2.textContent === requestName;
+                        }
+                    );
+
+                    if (endpointToDelete) {
+                        endpointToDelete.style.animation =
+                            "fadeOut 0.3s ease-out";
+                        setTimeout(() => endpointToDelete.remove(), 300);
+                    }
+
+                    // Показываем уведомление об удалении
+                    const notification = document.createElement("div");
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #f93e3e;
+                        color: white;
+                        padding: 15px;
+                        border-radius: 4px;
+                        animation: slideIn 0.5s ease-out;
+                        z-index: 1001;
+                    `;
+                    notification.textContent = `Запрос "${requestName}" удален!`;
+                    document.body.appendChild(notification);
+
+                    setTimeout(() => {
+                        notification.style.animation = "fadeOut 0.5s ease-out";
+                        setTimeout(() => notification.remove(), 500);
+                    }, 3000);
+                }
+            }
+
+            function editRequest(requestName) {
+                const savedRequests = JSON.parse(
+                    localStorage.getItem("requests") || "[]"
+                );
+                const request = savedRequests.find(
+                    (req) => req.name === requestName
+                );
+
+                if (request) {
+                    // Заполняем форму данными запроса
+                    document.getElementById("requestName").value = request.name;
+                    document.getElementById("requestMethod").value =
+                        request.method;
+                    document.getElementById("requestUrl").value = request.url;
+
+                    // Очищаем и заполняем поля запроса
+                    document.getElementById("requestFields").innerHTML = "";
+                    request.requestFields.forEach((field) => {
+                        const div = document.createElement("div");
+                        div.className = "input-group";
+                        div.innerHTML = `
+                            <input type="text" placeholder="Название поля" value="${
+                                field.name
+                            }" required>
+                            <select>
+                                <option value="string" ${
+                                    field.type === "string" ? "selected" : ""
+                                }>String</option>
+                                <option value="number" ${
+                                    field.type === "number" ? "selected" : ""
+                                }>Number</option>
+                                <option value="boolean" ${
+                                    field.type === "boolean" ? "selected" : ""
+                                }>Boolean</option>
+                            </select>
+                            <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
+                        `;
+                        document
+                            .getElementById("requestFields")
+                            .appendChild(div);
+                    });
+
+                    // Аналогично для полей ответа
+                    document.getElementById("responseFields").innerHTML = "";
+                    request.responseFields.forEach((field) => {
+                        const div = document.createElement("div");
+                        div.className = "input-group";
+                        div.innerHTML = `
+                            <input type="text" placeholder="Название поля" value="${
+                                field.name
+                            }" required>
+                            <select>
+                                <option value="string" ${
+                                    field.type === "string" ? "selected" : ""
+                                }>String</option>
+                                <option value="number" ${
+                                    field.type === "number" ? "selected" : ""
+                                }>Number</option>
+                                <option value="boolean" ${
+                                    field.type === "boolean" ? "selected" : ""
+                                }>Boolean</option>
+                            </select>
+                            <button type="button" class="remove-field-btn" onclick="this.parentElement.remove()">Удалить</button>
+                        `;
+                        document
+                            .getElementById("responseFields")
+                            .appendChild(div);
+                    });
+
+                    // Открываем попап
+                    openPopup();
+
+                    // Обновляем обработчик отправки формы для режима редактирования
+                    const form = document.getElementById("newRequestForm");
+                    form.onsubmit = function (e) {
+                        e.preventDefault();
+
+                        const requestData = {
+                            name: document.getElementById("requestName").value,
+                            method: document.getElementById("requestMethod")
+                                .value,
+                            url: document.getElementById("requestUrl").value,
+                            requestFields: Array.from(
+                                document.getElementById("requestFields")
+                                    .children
+                            ).map((field) => ({
+                                name: field.querySelector("input").value,
+                                type: field.querySelector("select").value,
+                            })),
+                            responseFields: Array.from(
+                                document.getElementById("responseFields")
+                                    .children
+                            ).map((field) => ({
+                                name: field.querySelector("input").value,
+                                type: field.querySelector("select").value,
+                            })),
+                        };
+
+                        // Обновляем localStorage
+                        const savedRequests = JSON.parse(
+                            localStorage.getItem("requests") || "[]"
+                        );
+                        const updatedRequests = savedRequests.filter(
+                            (req) => req.name !== requestName
+                        );
+                        updatedRequests.push(requestData);
+                        localStorage.setItem(
+                            "requests",
+                            JSON.stringify(updatedRequests)
+                        );
+
+                        // Обновляем DOM сразу
+                        const endpoints =
+                            document.querySelectorAll(".endpoint");
+                        const oldEndpoint = Array.from(endpoints).find(
+                            (endpoint) => {
+                                const h2 = endpoint.querySelector("h2");
+                                return h2 && h2.textContent === requestName;
+                            }
+                        );
+
+                        if (oldEndpoint) {
+                            // Анимируем удаление старого элемента
+                            oldEndpoint.style.animation =
+                                "fadeOut 0.3s ease-out";
+                            setTimeout(() => {
+                                oldEndpoint.remove();
+                                // Создаем новый элемент с анимацией появления
+                                const newEndpoint =
+                                    createEndpointElement(requestData);
+                                newEndpoint.style.animation =
+                                    "slideIn 0.3s ease-out";
+                            }, 300);
+                        }
+
+                        // Закрываем попап
+                        document.getElementById("overlay").style.display =
+                            "none";
+                        document.getElementById("popup").style.display = "none";
+
+                        // Сбрасываем форму
+                        this.reset();
+
+                        // Показываем уведомление
+                        const notification = document.createElement("div");
+                        notification.style.cssText = `
+                            position: fixed;
+                            top: 20px;
+                            right: 20px;
+                            background: #49cc90;
+                            color: white;
+                            padding: 15px;
+                            border-radius: 4px;
+                            animation: slideIn 0.5s ease-out;
+                            z-index: 1001;
+                        `;
+                        notification.textContent = `Запрос "${requestData.name}" успешно отредактирован!`;
+                        document.body.appendChild(notification);
+
+                        setTimeout(() => {
+                            notification.style.animation =
+                                "fadeOut 0.5s ease-out";
+                            setTimeout(() => notification.remove(), 500);
+                        }, 3000);
+
+                        // Восстанавливаем стандартный обработчик отправки формы
+                        this.onsubmit = window.originalFormSubmit;
+
+                        return false;
+                    };
+                }
+            }
+
+            // Сохраняем оригинальный обработчик отправки формы
+            window.originalFormSubmit =
+                document.getElementById("newRequestForm").onsubmit;
+
+            // Добавляем стили анимаций, если их еще нет
+            if (!document.querySelector("#notification-animations")) {
+                const style = document.createElement("style");
+                style.id = "notification-animations";
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    
+                    @keyframes fadeOut {
+                        from { opacity: 1; transform: translateX(0); }
+                        to { opacity: 0; transform: translateX(20px); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            // Добавим кнопки в header
+            function addExportImportButtons() {
+                const container = document.querySelector(".container div");
+
+                // Добавляем кнопку экспорта
+                const exportBtn = document.createElement("button");
+                exportBtn.className = "export-btn";
+                exportBtn.onclick = exportRequests;
+                exportBtn.innerHTML = "📥 Экспорт запросов";
+
+                // Добавляем кнопку импорта
+                const importBtn = document.createElement("button");
+                importBtn.className = "import-btn";
+                importBtn.onclick = () =>
+                    document.getElementById("importFile").click();
+                importBtn.innerHTML = "📤 Импорт запросов";
+
+                // Добавляем скрытый input для загрузки файла
+                const importInput = document.createElement("input");
+                importInput.type = "file";
+                importInput.id = "importFile";
+                importInput.accept = ".json";
+                importInput.style.display = "none";
+                importInput.onchange = importRequests;
+
+                container.insertBefore(exportBtn, container.lastElementChild);
+                container.insertBefore(importBtn, container.lastElementChild);
+                container.appendChild(importInput);
+            }
+
+            // Функция экспорта запросов
+            function exportRequests() {
+                const savedRequests = JSON.parse(
+                    localStorage.getItem("requests") || "[]"
+                );
+                const dataStr = JSON.stringify(savedRequests, null, 2);
+                const dataUri =
+                    "data:application/json;charset=utf-8," +
+                    encodeURIComponent(dataStr);
+
+                const exportFileDefaultName = "api_requests.json";
+
+                const linkElement = document.createElement("a");
+                linkElement.setAttribute("href", dataUri);
+                linkElement.setAttribute("download", exportFileDefaultName);
+
+                // Анимация кнопки
+                const exportBtn = document.querySelector(".export-btn");
+                exportBtn.style.animation = "pulse 0.3s ease";
+
+                // Показываем уведомление
+                const notification = document.createElement("div");
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #49cc90;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 4px;
+                    animation: slideIn 0.5s ease-out;
+                    z-index: 1001;
+                `;
+                notification.textContent = "Запросы успешно экспортированы!";
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = "fadeOut 0.5s ease-out";
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+
+                linkElement.click();
+            }
+
+            // Функция импорта запросов
+            function importRequests(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        try {
+                            const requests = JSON.parse(e.target.result);
+
+                            // Проверяем валидность данных
+                            if (!Array.isArray(requests))
+                                throw new Error("Неверный формат файла");
+
+                            // Сохраняем в localStorage
+                            localStorage.setItem(
+                                "requests",
+                                JSON.stringify(requests)
+                            );
+
+                            // Очищаем текущие запросы
+                            const endpoints =
+                                document.querySelectorAll(".endpoint");
+                            endpoints.forEach((endpoint) => {
+                                if (
+                                    !endpoint.querySelector(
+                                        'form[data-endpoint="/login"]'
+                                    ) &&
+                                    !endpoint.querySelector(
+                                        'form[data-endpoint="/register"]'
+                                    )
+                                ) {
+                                    endpoint.remove();
+                                }
+                            });
+
+                            // Загружаем импортированные запросы
+                            requests.forEach((request) => {
+                                createEndpointElement(request);
+                            });
+
+                            // Показываем уведомление об успехе
+                            const notification = document.createElement("div");
+                            notification.style.cssText = `
+                                position: fixed;
+                                top: 20px;
+                                right: 20px;
+                                background: #49cc90;
+                                color: white;
+                                padding: 15px;
+                                border-radius: 4px;
+                                animation: slideIn 0.5s ease-out;
+                                z-index: 1001;
+                            `;
+                            notification.textContent =
+                                "Запросы успешно импортированы!";
+                            document.body.appendChild(notification);
+
+                            setTimeout(() => {
+                                notification.style.animation =
+                                    "fadeOut 0.5s ease-out";
+                                setTimeout(() => notification.remove(), 500);
+                            }, 3000);
+                        } catch (error) {
+                            // Показываем уведомление об ошибке
+                            const notification = document.createElement("div");
+                            notification.style.cssText = `
+                                position: fixed;
+                                top: 20px;
+                                right: 20px;
+                                background: #f93e3e;
+                                color: white;
+                                padding: 15px;
+                                border-radius: 4px;
+                                animation: slideIn 0.5s ease-out;
+                                z-index: 1001;
+                            `;
+                            notification.textContent =
+                                "Ошибка при импорте файла!";
+                            document.body.appendChild(notification);
+
+                            setTimeout(() => {
+                                notification.style.animation =
+                                    "fadeOut 0.5s ease-out";
+                                setTimeout(() => notification.remove(), 500);
+                            }, 3000);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+                // Очищаем input для возможности повторной загрузки того же файла
+                event.target.value = "";
+            }
+
+            // Добавляем стили для новых кнопок
+            const style = document.createElement("style");
+            style.textContent = `
+                .export-btn, .import-btn {
+                    background: #61affe;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-right: 10px;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                }
+                
+                .export-btn:hover, .import-btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                }
+                
+                .export-btn:active, .import-btn:active {
+                    transform: translateY(0);
+                }
+                
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Вызываем функцию добавления кнопок при загрузке страницы
+            document.addEventListener(
+                "DOMContentLoaded",
+                addExportImportButtons
+            );
+        </script>
 
         <div class="endpoint">
-            <h2>Регистрация пользователя</h2>
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                "
+            >
+                <h2>Тестовый запрос</h2>
+                <div class="endpoint-controls">
+                    <button
+                        onclick="editRequest('Тестовый запрос')"
+                        class="control-btn edit-btn"
+                    >
+                        ✎ Изменить
+                    </button>
+                    <button
+                        onclick="deleteRequest('Тестовый запрос')"
+                        class="control-btn delete-btn"
+                    >
+                        ✕ Удалить
+                    </button>
+                </div>
+            </div>
             <div>
                 <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/register</span>
+                <span class="url">http://localhost:8080/api/test</span>
             </div>
-            <pre>
+            <div id="test-notification" class="notification"></div>
+            <form data-endpoint="/api/test">
+                <div class="input-group">
+                    <label>username:</label>
+                    <input type="text" name="username" required />
+                </div>
+                <div class="input-group">
+                    <label>email:</label>
+                    <input type="email" name="email" required />
+                </div>
+                <div class="input-group">
+                    <label>age:</label>
+                    <input type="number" name="age" required />
+                </div>
+                <button type="submit" class="submit-btn">Отправить</button>
+            </form>
+            <pre class="request-body">
+Тело запроса:
 {
-    "email": "user@example.com",
-    "password": "password123",
+    "username": "john_doe",
+    "email": "john@example.com",
+    "age": 25
 }</pre
             >
-            <pre>
+            <pre class="response-body">
 Ответ:
 {
-    "user": {
-        "email": "user@example.com",
-    },
-    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Вход в систему</h2>
-            <div>
-                <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/login</span>
-            </div>
-            <pre>
-{
-    "email": "user@example.com",
-    "password": "password123"
-}</pre
-            >
-            <pre>
-Ответ:
-{
-    "user": {
-        "email": "user@example.com",
-    },
-    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Обновление Access токена</h2>
-            <div>
-                <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/refresh</span>
-            </div>
-            <pre>
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
-}</pre
-            >
-            <pre>
-Ответ:
-{
-    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Обновление Refresh токена</h2>
-            <div>
-                <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/refresh-token</span>
-            </div>
-            <pre>
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
-}</pre
-            >
-            <pre>
-Ответ:
-{
-    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Выход из системы</h2>
-            <div>
-                <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/logout</span>
-            </div>
-            <pre>
-Headers:
-Authorization: Bearer [accessToken]
-</pre
-            >
-            <pre>
-Ответ:
-{
-    "message": "Успешный выход из системы"
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Получение пользователя по ID</h2>
-            <div>
-                <span class="method get">GET</span>
-                <span class="url">http://localhost:8080/users/1</span>
-            </div>
-            <pre>
-Headers:
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</pre
-            >
-            <pre>
-Ответ:
-{
-    "id": 1,
-    "email": "user@example.com",
-    "name": "John Doe"
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Создание нового пользователя</h2>
-            <div>
-                <span class="method post">POST</span>
-                <span class="url">http://localhost:8080/users</span>
-            </div>
-            <pre>
-Headers:
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
-
-{
-    "name": "Alice"
-}</pre
-            >
-            <pre>
-Ответ:
-{
-    "id": 2,
-    "name": "Alice"
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Обновление пользователя</h2>
-            <div>
-                <span class="method put">PUT</span>
-                <span class="url">http://localhost:8080/users/1</span>
-            </div>
-            <pre>
-Headers:
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
-
-{
-    "name": "Updated Alice"
-}</pre
-            >
-            <pre>
-Ответ:
-{
-    "id": 1,
-    "name": "Updated Alice"
-}</pre
-            >
-        </div>
-
-        <div class="endpoint">
-            <h2>Удаление пользователя</h2>
-            <div>
-                <span class="method delete">DELETE</span>
-                <span class="url">http://localhost:8080/users/1</span>
-            </div>
-            <pre>
-Headers:
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</pre
-            >
-            <pre>
-Ответ:
-{
-    "message": "Пользователь успешно удален"
+    "id": "12345",
+    "status": "success",
+    "message": "User created successfully",
+    "data": {
+        "username": "john_doe",
+        "email": "john@example.com",
+        "age": 25,
+        "createdAt": "2024-01-01T12:00:00Z"
+    }
 }</pre
             >
         </div>
