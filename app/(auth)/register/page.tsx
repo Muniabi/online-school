@@ -18,6 +18,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar, AvatarImage } from "@/components/ui";
 import { register } from "@/utils/services/Authentication";
 import PasswordInput from "@/components/ui/password-input";
+import { sendVerificationEmail } from "@/utils/services/emailService";
 
 const formSchema = z.object({
     isTeacher: z.boolean({
@@ -52,11 +53,26 @@ export default function RegisterPage() {
         const password = data.password;
         const isTeacher = data.isTeacher;
 
-        // Передаем isTeacher в функцию register
-        register(email, password, isTeacher);
+        try {
+            // Генерируем 6-значный код
+            const verificationCode = Math.floor(
+                100000 + Math.random() * 900000
+            ).toString();
 
-        // Можно добавить логику для перенаправления
-        // router.push("/register/verifited");
+            // Сохраняем код, email и данные для регистрации в localStorage
+            localStorage.setItem("verificationCode", verificationCode);
+            localStorage.setItem("pendingEmail", email);
+            localStorage.setItem("pendingPassword", password);
+            localStorage.setItem("pendingIsTeacher", String(isTeacher));
+
+            // Отправляем код на почту
+            await sendVerificationEmail(email, verificationCode);
+
+            // Перенаправляем на страницу верификации
+            router.push("/register/verifited");
+        } catch (error) {
+            console.error("Ошибка при отправке кода:", error);
+        }
     };
 
     return (
