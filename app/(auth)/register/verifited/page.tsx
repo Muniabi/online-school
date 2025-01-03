@@ -26,6 +26,8 @@ export default function Verified() {
     const handleResendCode = async () => {
         try {
             const email = localStorage.getItem("pendingEmail");
+            const isTeacher = localStorage.getItem("pendingIsTeacher");
+
             if (!email) {
                 toast.error("Email не найден");
                 return;
@@ -34,7 +36,7 @@ export default function Verified() {
             setResendDisabled(true);
             setCountdown(60);
 
-            await sendVerificationEmail(email);
+            await sendVerificationEmail(email, isTeacher || "false");
             toast.success("Код подтверждения отправлен повторно");
         } catch (error) {
             toast.error("Ошибка при отправке кода");
