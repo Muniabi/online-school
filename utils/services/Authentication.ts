@@ -65,19 +65,37 @@ export const register = async (
 // Логин пользователя
 export const login = async (email: string, password: string) => {
     try {
+        console.log("Starting login process");
+        console.log("Credentials:", { email, password: "***" });
+
         const result = await signIn("credentials", {
             email,
             password,
             redirect: false,
+            callbackUrl: "/account",
+        });
+
+        console.log("SignIn complete. Result:", {
+            ...result,
+            error: result?.error || null,
+            status: result?.status,
+            ok: result?.ok,
         });
 
         if (result?.error) {
-            throw new Error(result.error);
+            if (result.error === "CredentialsSignin") {
+                throw new Error("Неверный email или пароль");
+            }
+            throw new Error(`Ошибка авторизации: ${result.error}`);
+        }
+
+        if (!result?.ok) {
+            throw new Error(`Ошибка входа. Статус: ${result?.status}`);
         }
 
         return result;
     } catch (error) {
-        console.error("Ошибка при входе:", error);
+        console.error("Login process failed:", error);
         throw error;
     }
 };
@@ -120,18 +138,15 @@ export const logOut = async (): Promise<{
 // Функция обновления токена
 export const refreshAccessToken = async (refreshToken: string) => {
     try {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/refresh`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    refreshToken,
-                }),
-            }
-        );
+        const response = await fetch(`${IP}/refresh`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                refreshToken,
+            }),
+        });
 
         const data = await response.json();
 

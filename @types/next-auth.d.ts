@@ -7,9 +7,13 @@ declare module "next-auth" {
             id: string;
             email: string;
             name: string;
+            image?: string;
+            avatar?: string;
             accessToken: string;
             refreshToken: string;
             isTeacher: boolean;
+            premium?: boolean;
+            error?: string;
         };
     }
 
@@ -17,8 +21,12 @@ declare module "next-auth" {
         id: string;
         email: string;
         name: string;
+        image?: string;
+        avatar?: string;
         accessToken: string;
         refreshToken: string;
         isTeacher: boolean;
+        premium?: boolean;
+        error?: string;
     }
 }

@@ -47,17 +47,23 @@ export default function LoginPage() {
 
     const onSubmit = async (data: FormData) => {
         try {
+            console.log("Form submission:", data);
             const result = await login(data.email, data.password);
 
             if (result?.ok) {
-                router.push("/dashboard");
                 toast.success("Успешный вход");
+                router.push("/account");
             } else {
-                toast.error("Ошибка входа");
+                console.error("Login failed:", result);
+                toast.error("Неверный email или пароль");
             }
         } catch (error) {
-            toast.error("Ошибка при входе");
-            console.error(error);
+            console.error("Login error:", error);
+            toast.error(
+                error instanceof Error
+                    ? error.message
+                    : "Произошла ошибка при входе"
+            );
         }
     };
 
